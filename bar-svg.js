@@ -4,10 +4,17 @@ var region_load_report =
 	{"hostname":"rs2","regions":10},
 	{"hostname":"rs3","regions":2},
 	{"hostname":"rs4","regions":3}
+	,{"hostname":"rs5","regions":25}
+//	,{"hostname":"rs6","regions":150}
     ];
 
-var vertical_scaling = 10;          
-var bar_width = 100;
+// TODO: make these depend on the client's browser window dimensions.
+var bar_chart_height = 200;
+var bar_chart_width = 600;
+var max_value = d3.max(region_load_report, function(regionserver) { return regionserver.regions});
+
+var vertical_scaling = bar_chart_height / max_value;
+var bar_width = bar_chart_width / (region_load_report.length * 1.05);
 var max_height = vertical_scaling * d3.max(region_load_report,
 					   function(regionserver) { return regionserver.regions});
 
@@ -36,7 +43,18 @@ chart.selectAll("text")
     .attr("y", function(regionserver) { return  max_height - 10;})
     .attr("dx", 30)
     .attr("dy", ".35em") // vertical-align: middle
-    .attr("text-anchor", "middle")
-    .text(function(regionserver){ return regionserver.hostname;});
+    .attr("text-anchor", "right")
+    .text(function(regionserver){ return regionserver.hostname + ":" + regionserver.regions;});
+ 
 
 // 3. ticks
+// ..
+
+// 4. bottom line
+chart.append("line")
+    .attr("x1", 0)
+    .attr("x2", bar_width * region_load_report.length)
+    .attr("y1", max_height)
+    .attr("y2", max_height)
+
+    .style("stroke", "black");
