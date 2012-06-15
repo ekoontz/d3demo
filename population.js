@@ -39,14 +39,14 @@ d3.csv("./population.csv", function(data) {
   });
 
   // Compute the extent of the data set in age and years.
-  var age0 = 0,
-      age1 = d3.max(data, function(d) { return d.age; }),
-      year0 = d3.min(data, function(d) { return d.year; }),
-      year1 = d3.max(data, function(d) { return d.year; }),
-      year = year1;
+  var min_age = 0,
+      max_age = d3.max(data, function(d) { return d.age; }),
+      min_year = d3.min(data, function(d) { return d.year; }),
+      max_year = d3.max(data, function(d) { return d.year; }),
+      current_year = max_year;
 
   // Update the scale domains.
-  x.domain([0, age1 + 5]);
+  x.domain([0, max_age + 5]);
   y.domain([0, d3.max(data, function(d) { return d.people; })]);
 
   // Add rules to show the population values.
@@ -67,9 +67,9 @@ d3.csv("./population.csv", function(data) {
 
   // Add labeled rects for each birthyear.
   var years = body.selectAll("g")
-      .data(d3.range(year0 - age1, year1 + 5, 5))
+      .data(d3.range(min_year - max_age, max_year + 5, 5))
     .enter().append("g")
-      .attr("transform", function(d) { return "translate(" + x(year1 - d) + ",0)"; });
+      .attr("transform", function(d) { return "translate(" + x(max_year - d) + ",0)"; });
 
   years.selectAll("rect")
       .data(d3.range(2))
@@ -88,7 +88,7 @@ d3.csv("./population.csv", function(data) {
 
   // Add labels to show the age.
   svg.append("g").selectAll("text")
-      .data(d3.range(0, age1 + 5, 5))
+      .data(d3.range(0, max_age + 5, 5))
     .enter().append("text")
       .attr("text-anchor", "middle")
       .attr("transform", function(d) { return "translate(" + (x(d) + x(5) / 2) + ",-4)scale(-1,-1)"; })
@@ -102,27 +102,14 @@ d3.csv("./population.csv", function(data) {
       .rollup(function(v) { return v.map(function(d) { return d.people; }); })
       .map(data);
 
-  // Allow the arrow keys to change the displayed year.
-  d3.select(window).on("keydown", function() {
-    switch (d3.event.keyCode) {
-      case 37: year = Math.max(year0, year - 10); break;
-      case 39: year = Math.min(year1, year + 10); break;
-    }
-    redraw();
-  });
-
   redraw();
 
   function redraw() {
-    if (!(year in data)) return;
-    title.text(year);
-
-    body.transition()
-        .duration(750)
-        .attr("transform", function(d) { return "translate(" + x(year - year1) + ",0)"; });
+    if (!(current_year in data)) return;
+    title.text(current_year);
 
     years.selectAll("rect")
-        .data(function(d) { return data[year][d] || [0, 0]; })
+        .data(function(d) { return data[current_year][d] || [0, 0]; })
       .transition()
         .duration(750)
         .attr("height", y);
