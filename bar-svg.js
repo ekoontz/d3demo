@@ -7,7 +7,7 @@ var region_load_report =
     ];
 
 var vertical_scaling = 10;          
-var bar_width = 50;
+var bar_width = 100;
 var max_height = vertical_scaling * d3.max(region_load_report,
 					   function(regionserver) { return regionserver.regions});
 
@@ -27,9 +27,9 @@ chart.selectAll("rect")
 chart.selectAll("text")
     .data(region_load_report)
     .enter().append("text")
-    .attr("x", function(regionserver, i) { return ((i+1) * (bar_width)) - 10; })
+    .attr("x", function(regionserver, i) { return ((i) * (bar_width)); })
     .attr("y", function(regionserver) { return  max_height - 10;})
-    .attr("dx", -3) // padding-right
+    .attr("dx", 30)
     .attr("dy", ".35em") // vertical-align: middle
-    .attr("text-anchor", "end") // text-align: right
+    .attr("text-anchor", "middle")
     .text(function(regionserver){ return regionserver.hostname;});
