@@ -7,11 +7,12 @@ Ideas
 -----
 
 * Bar chart showing number of regions per regionserver
-* (http://mbostock.github.com/d3/ex/stream.html) Stream Graph for continuous display of number of regions per regionserver.
+* [Stream Graph](http://mbostock.github.com/d3/ex/stream.html) for continuous display of number of regions per regionserver.
 
 References
 ----------
 
-* (http://mbostock.github.com/d3/) -- d3 on Github
-* (http://hbase.apache.org/) -- Apache HBase
-* (http://hiro-tan.org/~ekoontz/d3demo/) -- demo site
+* [D3](http://mbostock.github.com/d3/)
+* [Apache HBase](http://hbase.apache.org/)
+* [try d3demo](http://hiro-tan.org/~ekoontz/d3demo/)
+
