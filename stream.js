@@ -19,8 +19,25 @@ var stack = d3.layout.stack();
 // - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-offset
 var offset = stack.offset("zero");
 
-var data0 = offset(stream_layers(layers, samples));
-var data1 = offset(stream_layers(layers, samples));
+//var data0 = offset(stream_waves(layers, samples));
+var data0 = [
+    [{x:0, y:0, y0:0}, 
+     {x:1, y:9, y0:0}, 
+     {x:2, y:5, y0:0}, 
+     {x:3, y:8, y0:0},
+     {x:4, y:0, y0:0}],
+
+    [{x:0, y:0, y0:0}, 
+     {x:1, y:7, y0:0}, 
+     {x:2, y:2, y0:0}, 
+     {x:3, y:4, y0:0},
+     {x:4, y:0, y0:0}]
+
+];
+
+
+var data1 = offset(stream_waves(layers, samples));
+
 var color = d3.interpolateRgb("#aad", "#556");
 
 var width = 560;
@@ -45,6 +62,7 @@ var vis = d3.select("#chart")
 vis.selectAll("path")
     .data(data0)
     .enter().append("path")
-    .style("fill", function() { return color(Math.random());})
+    .style("fill", function() {
+	return color(Math.random());})
     .attr("d", area);
 
