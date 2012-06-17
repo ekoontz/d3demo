@@ -28,7 +28,21 @@ var regionload_over_time = [
 
 ];
 
+
+
 var data = regionload_over_time;
+
+
+// "Returns an RGB color space interpolator between the two colors a
+// and b. The colors a and b need not be in RGB, but they will be
+// converted to RGB using d3.rgb. The red, green and blue channels are
+// interpolated linearly in a manner equivalent to interpolateRound,
+// as fractional channel values are not allowed. The return value of
+// the interpolator is always a string representing the RGB color,
+// such as "rgb(255,0,0)" for red."
+// - https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_interpolateRgb
+var color = d3.interpolateRgb("#3a0", "#ddd");
+
 
 var layers = data.length;
 // All data elements should have the same length (number of samples).
@@ -53,8 +67,8 @@ var data1 = d3.layout.stack().offset("zero")(data);
 
 var width = 560;
 var height = 200;
-var aggregated_regionload = data.concat(data1);
-var maximum_y = d3.max(aggregated_regionload,
+var aggregated_data = data.concat(data1);
+var maximum_y = d3.max(aggregated_data,
 		       function(d) {
 			   return d3.max(d, function(d) {
 			       return d.y0 + d.y;
@@ -76,16 +90,6 @@ var chart = d3.select("#chart")
     .append("svg")
     .attr("width", width)
     .attr("height", height);
-
-// "Returns an RGB color space interpolator between the two colors a
-// and b. The colors a and b need not be in RGB, but they will be
-// converted to RGB using d3.rgb. The red, green and blue channels are
-// interpolated linearly in a manner equivalent to interpolateRound,
-// as fractional channel values are not allowed. The return value of
-// the interpolator is always a string representing the RGB color,
-// such as "rgb(255,0,0)" for red."
-// - https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_interpolateRgb
-var color = d3.interpolateRgb("#3a0", "#ddd");
 
 chart.selectAll("path")
     .data(data)
