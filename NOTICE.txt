@@ -3,5 +3,5 @@ Foundation (http://www.apache.org/).
 
 In addition, this product includes software developed by:
 
-d3 (http://d3js.org/) included under the terms of Michael Bostock's d3 license.  See
+d3 (http://d3js.org/) included under the terms of the d3 license.  See
 the full text here: https://raw.github.com/mbostock/d3/master/LICENSE
