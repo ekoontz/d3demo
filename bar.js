@@ -1,5 +1,30 @@
-// datum_to_x is a function that takes a single data item (a datum) and returns its x value.
-// datum_to_y is a function that takes a single data item (a datum) and returns its y value.
+/* 
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * draw bar charts with d3 (http://d3js.org)
+ *
+ * bar_chart(): draw a bar chart.
+ * params: 
+ *  dom_id : node in your DOM tree where the chart will be put (please prefix with #).
+ *  data: an array of JSON maps.
+ *  datum_to_x: function that takes a element in your data array (a datum) and returns its x value.
+ *  datum_to_y: function that takes a element in your data array (a datum) and returns its y value.
+ */
+
 function bar_chart(dom_id,data,datum_to_x,datum_to_y) {
 
     // TODO: make these depend on the client's browser window dimensions.
