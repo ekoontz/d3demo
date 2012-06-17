@@ -6,14 +6,6 @@ var region_load_report =
 	{"hostname":"rs4","regions":3}
     ];
 
-function regionserver_x(regionserver) {
-    regionserver.hostname;
-}
-
-function regionserver_y(regionserver) {
-    regionserver.regions;
-}
-
 bar_chart("#rsload", region_load_report, 
 	  function to_x(regionserver) {return regionserver.hostname;},
 	  function to_y(regionserver) {return regionserver.regions;});
