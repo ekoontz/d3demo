@@ -60,7 +60,7 @@ function bar_chart(dom_id,data,datum_to_x,datum_to_y) {
     // e.g. "10000" has length 5.
     var magical_x_label_offset = -15;
     
-    // tick labels.
+    // 4. tick labels.
     chart.selectAll(".rule")
 	.data(tick_ys)
 	.enter().append("text")
@@ -72,7 +72,7 @@ function bar_chart(dom_id,data,datum_to_x,datum_to_y) {
 	.attr("text-anchor", "middle")
 	.text(String);
     
-    // 4. bottom line
+    // 5. bottom line
     chart.append("line")
 	.attr("x1", 0)
 	.attr("x2", bar_width * data.length)
