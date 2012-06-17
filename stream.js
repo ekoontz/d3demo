@@ -1,23 +1,4 @@
-var layers = 3; // number of layers
-var samples = 5; // number of samples per layer
 
-//"The stack layout takes a two-dimensional array of data and computes a
-//baseline; the baseline is then propagated to the above layers, so as
-// to produce a stacked graph." 
-// - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-stack
-
-//"Constructs a new stack layout with the default offset (zero) and order (null)."
-// - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-stack
-var stack = d3.layout.stack();
-
-
-// "sets the stack offset algorithm to the specified value:
-//    silhouette - center the stream, as in ThemeRiver.
-//    wiggle - minimize weighted change in slope.
-//    expand - normalize layers to fill the range [0,1].
-//    zero - use a zero baseline, i.e., the y-axis."
-// - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-offset
-var offset = stack.offset("zero");
 
 var regionload_over_time = [
 
@@ -42,8 +23,23 @@ var regionload_over_time = [
 
 ];
 
+var layers = regionload_over_time.length;
+var samples = regionload_over_time[0].length;
 
-var data1 = offset(stream_waves(layers, samples));
+//"The stack layout takes a two-dimensional array of data and computes a
+//baseline; the baseline is then propagated to the above layers, so as
+// to produce a stacked graph." 
+// - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-stack
+//
+// stack()
+//"Constructs a new stack layout with the default offset (zero) and order (null)."
+// - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-stack
+
+// offset()
+// "sets the stack offset algorithm to the specified value:
+//    zero - use a zero baseline, i.e., the y-axis."
+// - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-offset
+var data1 = d3.layout.stack().offset("zero")(regionload_over_time);
 
 // "Returns an RGB color space interpolator between the two colors a
 // and b. The colors a and b need not be in RGB, but they will be
