@@ -28,11 +28,13 @@ var regionload_over_time = [
 
 ];
 
-var layers = regionload_over_time.length;
-// All regionload_over_time elements should have the same length (number of samples).
+var data = regionload_over_time;
+
+var layers = data.length;
+// All data elements should have the same length (number of samples).
 // Thus we arbitrarily look at the length of the first element while assuming all other elements
 // have the same length.
-var samples = regionload_over_time[0].length;
+var samples = data[0].length;
 
 //"The stack layout takes a two-dimensional array of data and computes a
 //baseline; the baseline is then propagated to the above layers, so as
@@ -47,11 +49,11 @@ var samples = regionload_over_time[0].length;
 // "sets the stack offset algorithm to the specified value:
 //    zero - use a zero baseline, i.e., the y-axis."
 // - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-offset
-var data1 = d3.layout.stack().offset("zero")(regionload_over_time);
+var data1 = d3.layout.stack().offset("zero")(data);
 
 var width = 560;
 var height = 200;
-var aggregated_regionload = regionload_over_time.concat(data1);
+var aggregated_regionload = data.concat(data1);
 var maximum_y = d3.max(aggregated_regionload,
 		       function(d) {
 			   return d3.max(d, function(d) {
@@ -86,7 +88,7 @@ var chart = d3.select("#chart")
 var color = d3.interpolateRgb("#3a0", "#ddd");
 
 chart.selectAll("path")
-    .data(regionload_over_time)
+    .data(data)
     .enter().append("path")
     .style("fill", function(d) {
 	console.info(d);
