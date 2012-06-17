@@ -1,17 +1,36 @@
-var layers = 5; // number of layers
-var samples = 100; // number of samples per layer
-var data0 = d3.layout.stack().offset("wiggle")(stream_layers(layers, samples));
-var data1 = d3.layout.stack().offset("wiggle")(stream_layers(layers, samples));
+var layers = 3; // number of layers
+var samples = 5; // number of samples per layer
+
+//"The stack layout takes a two-dimensional array of data and computes a
+//baseline; the baseline is then propagated to the above layers, so as
+// to produce a stacked graph." 
+// - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-stack
+
+//"Constructs a new stack layout with the default offset (zero) and order (null)."
+// - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-stack
+var stack = d3.layout.stack();
+
+
+// "sets the stack offset algorithm to the specified value:
+//    silhouette - center the stream, as in ThemeRiver.
+//    wiggle - minimize weighted change in slope.
+//    expand - normalize layers to fill the range [0,1].
+//    zero - use a zero baseline, i.e., the y-axis."
+// - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-offset
+var offset = stack.offset("zero");
+
+var data0 = offset(stream_layers(layers, samples));
+var data1 = offset(stream_layers(layers, samples));
 var color = d3.interpolateRgb("#aad", "#556");
 
 var width = 560;
-var height = 500;
+var height = 200;
 var mx = samples - 1;
 var my = d3.max(data0.concat(data1), function(d) {
-      return d3.max(d, function(d) {
+    return d3.max(d, function(d) {
         return d.y0 + d.y;
-      });
     });
+});
 
 var area = d3.svg.area()
     .x(function(d) { return d.x * width / mx; })
@@ -19,7 +38,7 @@ var area = d3.svg.area()
     .y1(function(d) { return height - (d.y + d.y0) * height / my; });
 
 var vis = d3.select("#chart")
-  .append("svg")
+    .append("svg")
     .attr("width", width)
     .attr("height", height);
 
@@ -29,14 +48,3 @@ vis.selectAll("path")
     .style("fill", function() { return color(Math.random());})
     .attr("d", area);
 
-function transition() {
-  d3.selectAll("path")
-      .data(function() {
-        var d = data1;
-        data1 = data0;
-        return data0 = d;
-      })
-    .transition()
-      .duration(500)
-      .attr("d", area);
-}
