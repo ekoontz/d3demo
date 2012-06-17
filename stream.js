@@ -1,25 +1,28 @@
-
-
 var regionload_over_time = [
+    // regionserver 1: a reliable workhorse that never goes down.
+    [{x:0, y:5, y0:0}, 
+     {x:1, y:5, y0:0}, 
+     {x:2, y:6, y0:0}, 
+     {x:3, y:4, y0:0},
+     {x:4, y:7, y0:0},
+     {x:5, y:8, y0:0}],
 
-    [{x:0, y:0, y0:0}, 
-     {x:1, y:15, y0:0}, 
-     {x:2, y:5, y0:0}, 
-     {x:3, y:8, y0:0},
-     {x:4, y:0, y0:0}],
-
-    [{x:0, y:0, y0:0}, 
+    // regionserver 2: the "comeback kid"
+    [{x:0, y:7, y0:0}, 
      {x:1, y:7, y0:0}, 
      {x:2, y:2, y0:0}, 
-     {x:3, y:4, y0:0},
-     {x:4, y:0, y0:0}],
+     {x:3, y:0, y0:0},
+     {x:4, y:8, y0:0},
+     {x:5, y:12, y0:0}],
 
-    [{x:0, y:0, y0:0}, 
-     {x:1, y:5, y0:0}, 
-     {x:2, y:1, y0:0}, 
-     {x:3, y:3, y0:0},
-     {x:4, y:0, y0:0}]
-
+    // regionserver 3: a box that started off well but sadly, crashes.
+    // the other machines, regionservers 1 and 2, had to pick up its load.
+    [{x:0, y:10, y0:0}, 
+     {x:1, y:10, y0:0}, 
+     {x:2, y:11, y0:0},
+     {x:3, y:0, y0:0}, 
+     {x:4, y:0, y0:0},
+     {x:5, y:0, y0:0}]
 
 ];
 
@@ -54,13 +57,13 @@ var color = d3.interpolateRgb("#3a0", "#ddd");
 var width = 560;
 var height = 200;
 var number_of_samples = samples - 1;
-
-var maximum_y = d3.max(regionload_over_time.concat(data1), function(d) {
-    return d3.max(d, function(d) {
-        return d.y0 + d.y;
-    });
-});
-
+var aggregated_regionload = regionload_over_time.concat(data1);
+var maximum_y = d3.max(aggregated_regionload,
+		       function(d) {
+			   return d3.max(d, function(d) {
+			       return d.y0 + d.y;
+			   });
+		       });
 
 // "Constructs a new area generator with the default x-, y0- and
 // y1-accessor functions (that assume the input data is a two-element
