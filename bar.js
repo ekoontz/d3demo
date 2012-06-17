@@ -52,15 +52,15 @@ function bar_chart(dom_id,data,datum_to_x,datum_to_y) {
 	.attr("y1",function(tick) { return tick * vertical_scaling;})
 	.attr("y2",function(tick) { return tick * vertical_scaling;})
 	.style("stroke","#aaa");
-    
+        
+    // 4. tick labels.
+
     // TODO: figure out multiplier for this rather than hardwired.
     var magical_tick_label_number = 12;
     
     // TODO: multiplier of maximum length of number string:
     // e.g. "10000" has length 5.
     var magical_x_label_offset = -15;
-    
-    // 4. tick labels.
     chart.selectAll(".rule")
 	.data(tick_ys)
 	.enter().append("text")
@@ -72,7 +72,7 @@ function bar_chart(dom_id,data,datum_to_x,datum_to_y) {
 	.attr("text-anchor", "middle")
 	.text(String);
     
-    // 5. bottom line
+    // 5. bottom line.
     chart.append("line")
 	.attr("x1", 0)
 	.attr("x2", bar_width * data.length)
