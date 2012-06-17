@@ -58,9 +58,10 @@ function bar_chart(dom_id,data,datum_to_x,datum_to_y) {
     // TODO: figure out multiplier for this rather than hardwired.
     var magical_tick_label_number = 12;
     
-    // TODO: multiplier of maximum length of number string:
+    // TODO: figure out multiplier of maximum length of number string rather than hardwired.
     // e.g. "10000" has length 5.
     var magical_x_label_offset = -15;
+
     chart.selectAll(".rule")
 	.data(tick_ys)
 	.enter().append("text")
