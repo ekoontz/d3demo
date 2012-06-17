@@ -19,10 +19,10 @@ var stack = d3.layout.stack();
 // - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-offset
 var offset = stack.offset("zero");
 
-//var data0 = offset(stream_waves(layers, samples));
-var data0 = [
+var regionload_over_time = [
+
     [{x:0, y:0, y0:0}, 
-     {x:1, y:9, y0:0}, 
+     {x:1, y:15, y0:0}, 
      {x:2, y:5, y0:0}, 
      {x:3, y:8, y0:0},
      {x:4, y:0, y0:0}],
@@ -31,19 +31,34 @@ var data0 = [
      {x:1, y:7, y0:0}, 
      {x:2, y:2, y0:0}, 
      {x:3, y:4, y0:0},
+     {x:4, y:0, y0:0}],
+
+    [{x:0, y:0, y0:0}, 
+     {x:1, y:5, y0:0}, 
+     {x:2, y:1, y0:0}, 
+     {x:3, y:3, y0:0},
      {x:4, y:0, y0:0}]
+
 
 ];
 
 
 var data1 = offset(stream_waves(layers, samples));
 
-var color = d3.interpolateRgb("#aad", "#556");
+// "Returns an RGB color space interpolator between the two colors a
+// and b. The colors a and b need not be in RGB, but they will be
+// converted to RGB using d3.rgb. The red, green and blue channels are
+// interpolated linearly in a manner equivalent to interpolateRound,
+// as fractional channel values are not allowed. The return value of
+// the interpolator is always a string representing the RGB color,
+// such as "rgb(255,0,0)" for red."
+// - https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_interpolateRgb
+var color = d3.interpolateRgb("#3a0", "#ddd");
 
 var width = 560;
 var height = 200;
 var mx = samples - 1;
-var my = d3.max(data0.concat(data1), function(d) {
+var my = d3.max(regionload_over_time.concat(data1), function(d) {
     return d3.max(d, function(d) {
         return d.y0 + d.y;
     });
@@ -54,15 +69,16 @@ var area = d3.svg.area()
     .y0(function(d) { return height - d.y0 * height / my; })
     .y1(function(d) { return height - (d.y + d.y0) * height / my; });
 
-var vis = d3.select("#chart")
+var chart = d3.select("#chart")
     .append("svg")
     .attr("width", width)
     .attr("height", height);
 
-vis.selectAll("path")
-    .data(data0)
+chart.selectAll("path")
+    .data(regionload_over_time)
     .enter().append("path")
     .style("fill", function() {
-	return color(Math.random());})
+	return color(Math.random());
+    })
     .attr("d", area);
 
