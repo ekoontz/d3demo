@@ -57,17 +57,25 @@ var color = d3.interpolateRgb("#3a0", "#ddd");
 
 var width = 560;
 var height = 200;
-var mx = samples - 1;
-var my = d3.max(regionload_over_time.concat(data1), function(d) {
+var number_of_samples = samples - 1;
+
+var maximum_y = d3.max(regionload_over_time.concat(data1), function(d) {
     return d3.max(d, function(d) {
         return d.y0 + d.y;
     });
 });
 
+
+// "Constructs a new area generator with the default x-, y0- and
+// y1-accessor functions (that assume the input data is a two-element
+// array of numbers; see below for details), and linear
+// interpolation. The returned function generates path data for a
+// closed piecewise linear curve, or polygon, as in an area chart"
+// - https://github.com/mbostock/d3/wiki/SVG-Shapes#wiki-area
 var area = d3.svg.area()
-    .x(function(d) { return d.x * width / mx; })
-    .y0(function(d) { return height - d.y0 * height / my; })
-    .y1(function(d) { return height - (d.y + d.y0) * height / my; });
+    .x(function(d) { return d.x * width / number_of_samples; })
+    .y0(function(d) { return height - d.y0 * height / maximum_y; })
+    .y1(function(d) { return height - (d.y + d.y0) * height / maximum_y; });
 
 var chart = d3.select("#chart")
     .append("svg")
