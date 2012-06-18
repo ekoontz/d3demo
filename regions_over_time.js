@@ -34,17 +34,25 @@ var simpler_data_format = [
     [7,7,2,0,8,12],
     [10,10,11,0,0,0]];
 
-console.info(simpler_data_format.map(
-    function expand_to_streamgraph_format(server_history) {
-	return server_history.map(
-	    function time_and_server_to_region_load(num_regions) {
-		// num_regions is the number of regions at time = t.
-		return {x: 11, y: num_regions, y0:0};
-	    });
-    }
-));
+console.info("TRY:");
+console.info(simpler_data_format
+	     .map(function 
+		  expand_one_server_history(hist) {
+		      var retval = [];
+		      var t;
+		      var mycolor = 1.0 / (t+1.0);
+		      for (t in hist) {
+			  t = parseFloat(t);
+			  if (t == 0) {
+			      retval.push({x: t, y: hist[t], y0:0, color: 420000});
+			  } else {
+			      retval.push({x: t, y: hist[t], y0:0});
+			  }
+		      }
+		      return retval;
+		  }));
 
-
-
+console.info("CORRECT:");
+console.info(regionload_over_time);
 
 streamgraph("#rsload", regionload_over_time);
