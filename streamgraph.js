@@ -56,7 +56,7 @@ function streamgraph(dom_id,data) {
     // the interpolator is always a string representing the RGB color,
     // such as "rgb(255,0,0)" for red."
     // - https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_interpolateRgb
-    var color = d3.interpolateRgb("#3a0", "#bbb");
+    var color = d3.interpolateRgb("#3a0", "#ddd");
     
     var layers = data.length;
     // All data elements should have the same length (number of samples).
