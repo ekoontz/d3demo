@@ -61,9 +61,6 @@ function streamgraph(dom_id,data) {
 	.data(data)
 	.enter().append("path")
 	.style("fill", function(d) {
-	    console.info(d);
-	    console.info(d[0]);
-	    console.info(d[0].color);
 	    return color(d[0].color);
 	})
 	.attr("d", area);

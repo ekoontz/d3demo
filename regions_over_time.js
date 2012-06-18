@@ -29,4 +29,22 @@ var regionload_over_time = [
 
 ];
 
+var simpler_data_format = [
+    [5,5,6,4,7,8],
+    [7,7,2,0,8,12],
+    [10,10,11,0,0,0]];
+
+console.info(simpler_data_format.map(
+    function expand_to_streamgraph_format(server_history) {
+	return server_history.map(
+	    function time_and_server_to_region_load(num_regions) {
+		// num_regions is the number of regions at time = t.
+		return {x: 11, y: num_regions, y0:0};
+	    });
+    }
+));
+
+
+
+
 streamgraph("#rsload", regionload_over_time);
