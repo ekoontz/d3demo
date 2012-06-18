@@ -6,14 +6,12 @@ Using the D3 javascript library for displaying HBase metrics.
 Ideas
 -----
 
-* Bar chart showing number of regions per regionserver
-* [Stream Graph](http://mbostock.github.com/d3/ex/stream.html) for continuous display of number of regions per regionserver.
+* [Bar Chart Demo](http://hiro-tan.org/~ekoontz/d3demo/bar-svg.html) Shows number of regions per regionserver.
+* [Stream Graph Demo](http://hiro-tan.org/~ekoontz/d3demo/stream.html) Continuous display of number of regions per regionserver.
 
 References
 ----------
 
 * [D3](http://mbostock.github.com/d3/)
 * [Apache HBase](http://hbase.apache.org/)
-* [Bar Chart Demo](http://hiro-tan.org/~ekoontz/d3demo/bar-svg.html)
-* [Stream Graph Demo](http://hiro-tan.org/~ekoontz/d3demo/stream.html)
 
