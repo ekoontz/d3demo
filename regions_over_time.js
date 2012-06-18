@@ -34,25 +34,21 @@ var simpler_data_format = [
     [7,7,2,0,8,12],
     [10,10,11,0,0,0]];
 
-console.info("TRY:");
-console.info(simpler_data_format
-	     .map(function 
-		  expand_one_server_history(hist) {
-		      var retval = [];
-		      var t;
-		      var mycolor = 1.0 / (t+1.0);
-		      for (t in hist) {
-			  t = parseFloat(t);
-			  if (t == 0) {
-			      retval.push({x: t, y: hist[t], y0:0, color: 420000});
-			  } else {
-			      retval.push({x: t, y: hist[t], y0:0});
-			  }
-		      }
-		      return retval;
-		  }));
+var mytry = [];
+for (hist in simpler_data_format) {
+    var retval = [];
+    var t;
+    var myhistory = simpler_data_format[hist];
+    for (t in simpler_data_format[hist]) {
+	var val = parseFloat(simpler_data_format[hist][t]);
+	var t_int = parseInt(t);
+	if (t == 0) {
+	    retval.push({x: t_int, y: val, y0:0, color: ((hist / simpler_data_format[0].length) * 2)});
+	} else {
+	    retval.push({x: t_int, y: val, y0:0});
+	}
+    }
+    mytry.push(retval);
+}
 
-console.info("CORRECT:");
-console.info(regionload_over_time);
-
-streamgraph("#rsload", regionload_over_time);
+streamgraph("#rsload", mytry);
