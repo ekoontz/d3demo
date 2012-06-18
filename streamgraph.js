@@ -1,3 +1,29 @@
+/* 
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * draw bar charts with d3 (http://d3js.org)
+ *
+ * bar_chart(): draw a bar chart.
+ * params: 
+ *  dom_id : node in your DOM tree where the chart will be put (please prefix with #).
+ *  data: an array of JSON maps.
+ *  datum_to_x: function that takes a element in your data array (a datum) and returns its x value.
+ *  datum_to_y: function that takes a element in your data array (a datum) and returns its y value.
+ */
 function map_to_streamgraph(data) {
 
     var streamgraph_data = [];
@@ -22,8 +48,6 @@ function map_to_streamgraph(data) {
 
 function streamgraph(dom_id,data) {
 
-    var data = map_to_streamgraph(data);
-
     // "Returns an RGB color space interpolator between the two colors a
     // and b. The colors a and b need not be in RGB, but they will be
     // converted to RGB using d3.rgb. The red, green and blue channels are
@@ -32,7 +56,7 @@ function streamgraph(dom_id,data) {
     // the interpolator is always a string representing the RGB color,
     // such as "rgb(255,0,0)" for red."
     // - https://github.com/mbostock/d3/wiki/Transitions#wiki-d3_interpolateRgb
-    var color = d3.interpolateRgb("#3a0", "#ddd");
+    var color = d3.interpolateRgb("#3a0", "#bbb");
     
     var layers = data.length;
     // All data elements should have the same length (number of samples).
@@ -53,11 +77,12 @@ function streamgraph(dom_id,data) {
     // "sets the stack offset algorithm to the specified value:
     //    zero - use a zero baseline, i.e., the y-axis."
     // - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-offset
-    var data1 = d3.layout.stack().offset("zero")(data);
+    var formatted_data = map_to_streamgraph(data);
+    var data1 = d3.layout.stack().offset("zero")(formatted_data);
     
     var width = 560;
     var height = 200;
-    var aggregated_data = data.concat(data1);
+    var aggregated_data = formatted_data.concat(data1);
     var maximum_y = d3.max(aggregated_data,
 			   function(d) {
 			       return d3.max(d, function(d) {
@@ -82,10 +107,12 @@ function streamgraph(dom_id,data) {
 	.attr("height", height);
     
     chart.selectAll("path")
-	.data(data)
+	.data(formatted_data)
 	.enter().append("path")
 	.style("fill", function(d) {
 	    return color(d[0].color);
 	})
 	.attr("d", area);
+
+    ticks(chart,maximum_y,width,height,data.length);
 }

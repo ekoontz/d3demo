@@ -64,47 +64,8 @@ function bar_chart(dom_id,data,datum_to_x,datum_to_y) {
 	.attr("text-anchor", "right")
 	.text(function(datum){ return datum_to_x(datum);});
     
-    // 3. ticks.
-    var tickgen = d3.scale.linear()
-	.domain([0,max_value])
-    
-    var tick_ys = tickgen.ticks(10)
-    chart.selectAll("line")
-	.data(tick_ys).enter()
-	.append("line")
-	.attr("x1",function(tick) { return 0;})
-	.attr("x2",function(tick) { return bar_width * data.length;})
-	.attr("y1",function(tick) { return tick * vertical_scaling;})
-	.attr("y2",function(tick) { return tick * vertical_scaling;})
-	.style("stroke","#aaa");
-        
-    // 4. tick labels.
-
-    // TODO: figure out multiplier for this rather than hardwired.
-    var magical_tick_label_number = 12;
-    
-    // TODO: figure out multiplier of maximum length of number string rather than hardwired.
-    // e.g. "10000" has length 5.
-    var magical_x_label_offset = -15;
-
-    chart.selectAll(".rule")
-	.data(tick_ys)
-	.enter().append("text")
-	.attr("class", "rule")
-	.attr("x", bar_width * data.length)
-	.attr("dx", magical_x_label_offset)
-	.attr("y", function(tick) {return bar_chart_height - (tick * vertical_scaling);})
-	.attr("dy", magical_tick_label_number)
-	.attr("text-anchor", "middle")
-	.text(String);
-    
-    // 5. bottom line.
-    chart.append("line")
-	.attr("x1", 0)
-	.attr("x2", bar_width * data.length)
-	.attr("y1", max_height)
-	.attr("y2", max_height)
-	.style("stroke", "black");
+    // 3. ticks
+    ticks(chart,max_value,bar_width*data.length,bar_chart_height,data.length);
 }
 
 
