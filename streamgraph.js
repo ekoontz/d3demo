@@ -1,4 +1,28 @@
+function map_to_streamgraph(data) {
+
+    var streamgraph_data = [];
+    var hist;
+    for (hist in data) {
+	var retval = [];
+	var t;
+	var myhistory = data[hist];
+	for (t in data[hist]) {
+	    var val = parseFloat(data[hist][t]);
+	    var t_int = parseInt(t);
+	    if (t == 0) {
+		retval.push({x: t_int, y: val, y0:0, color: ((hist / data[0].length) * 2)});
+	    } else {
+		retval.push({x: t_int, y: val, y0:0});
+	    }
+	}
+	streamgraph_data.push(retval);
+    }
+    return streamgraph_data;
+}
+
 function streamgraph(dom_id,data) {
+
+    var data = map_to_streamgraph(data);
 
     // "Returns an RGB color space interpolator between the two colors a
     // and b. The colors a and b need not be in RGB, but they will be
