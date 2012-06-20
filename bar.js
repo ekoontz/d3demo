@@ -20,7 +20,7 @@
  * bar_chart(): draw a bar chart.
  * params: 
  *  dom_id : node in your DOM tree where the chart will be put (please prefix with #).
- *  data: an array of JSON maps.
+ *  data: an array of Javascript maps.
  *  datum_to_x: function that takes a element in your data array (a datum) and returns its x value.
  *  datum_to_y: function that takes a element in your data array (a datum) and returns its y value.
  */
