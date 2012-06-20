@@ -15,14 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * draw bar charts with d3 (http://d3js.org)
+ * draw ticks on a bar chart with d3 (http://d3js.org)
  *
- * bar_chart(): draw a bar chart.
+ * ticks(): draw vertical ticks on a chart.
  * params: 
- *  dom_id : node in your DOM tree where the chart will be put (please prefix with #).
- *  data: an array of JSON maps.
- *  datum_to_x: function that takes a element in your data array (a datum) and returns its x value.
- *  datum_to_y: function that takes a element in your data array (a datum) and returns its y value.
+ *   chart: an d3 svg object
+ *   maximum_y : max y value
+ *   width: width in pixels
+ *   height: height in pixels
+ *   size of data array used in chart.
  */
 function ticks(chart,maximum_y,width,height,data_length) {
     var tickgen = d3.scale.linear()
@@ -57,5 +58,4 @@ function ticks(chart,maximum_y,width,height,data_length) {
 	.attr("dy", magical_tick_label_number)
 	.attr("text-anchor", "middle")
 	.text(String);
-
 }
