@@ -17,26 +17,29 @@
  *
  * draw bar charts with d3 (http://d3js.org)
  *
- * bar_chart(): draw a bar chart.
+ * map_to_streamgraph(): draw a bar chart.
  * params: 
- *  dom_id : node in your DOM tree where the chart will be put (please prefix with #).
- *  data: an array of JSON maps.
- *  datum_to_x: function that takes a element in your data array (a datum) and returns its x value.
- *  datum_to_y: function that takes a element in your data array (a datum) and returns its y value.
+ *  histories: an array of histories: each history is an array of javascript maps or floats.
  */
-function map_to_streamgraph(data) {
-
+function map_to_streamgraph(histories) {
     var streamgraph_data = [];
-    var hist;
-    for (hist in data) {
-	var retval = [];
-	var t;
-	var myhistory = data[hist];
-	for (t in data[hist]) {
-	    var val = parseFloat(data[hist][t]);
-	    var t_int = parseInt(t);
+    var history;
+    for (history in histories) {
+	// hist is an array of data points, either maps or floats.
+	var retval = [],t;
+	for (t in histories[history]) {
+	    var val,t_int;
+	    t_int = parseInt(t);
+	    datum = histories[history][t];
+	    if (datum.value) {
+		// datum is a map: use datum.value as the value.
+		val = parseFloat(datum.value);
+	    } else {
+		// datum is just a floating-point value, not a map.
+		val = parseFloat(datum);
+	    }
 	    if (t == 0) {
-		retval.push({x: t_int, y: val, y0:0, color: ((hist / data[0].length) * 2)});
+		retval.push({x: t_int, y: val, y0:0, color: ((history / histories[0].length) * 2)});
 	    } else {
 		retval.push({x: t_int, y: val, y0:0});
 	    }
@@ -47,6 +50,7 @@ function map_to_streamgraph(data) {
 }
 
 function streamgraph(dom_id,data) {
+    var formatted_data = map_to_streamgraph(data);
 
     // "Returns an RGB color space interpolator between the two colors a
     // and b. The colors a and b need not be in RGB, but they will be
@@ -72,14 +76,13 @@ function streamgraph(dom_id,data) {
     // stack()
     //"Constructs a new stack layout with the default offset (zero) and order (null)."
     // - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-stack
-    
+    //
     // offset()
     // "sets the stack offset algorithm to the specified value:
     //    zero - use a zero baseline, i.e., the y-axis."
     // - https://github.com/mbostock/d3/wiki/Stack-Layout#wiki-offset
-    var formatted_data = map_to_streamgraph(data);
-    var data1 = d3.layout.stack().offset("zero")(formatted_data);
-    
+    var data1 = d3.layout.stack().offset("zero")(formatted_data);    
+
     var width = 560;
     var height = 200;
     var aggregated_data = formatted_data.concat(data1);
@@ -115,4 +118,5 @@ function streamgraph(dom_id,data) {
 	.attr("d", area);
 
     ticks(chart,maximum_y,width,height,data.length);
+    return chart;
 }
