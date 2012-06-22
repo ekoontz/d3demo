@@ -1,4 +1,22 @@
 .chart circle {
     stroke: white;
+    fill: black;
+}
+
+#earth {
+    stroke: salmon;
+    stroke-width:3;
     fill: lightgreen;
+}
+
+#mars {
+    stroke-width:2;
+    stroke: lightyellow;
+    fill: salmon;
+}
+
+#moon {
+    stroke-width:1;
+    stroke: lightgreen;
+    fill: lightyellow;
 }
