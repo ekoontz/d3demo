@@ -34,3 +34,4 @@ var chart = bar_chart("#rsload", region_load_report,
 	  function number_of_regions_is_y_axis(regionserver) {
 	      return regionserver.regions;
 	  });
+console.info("rsload is done!!");
