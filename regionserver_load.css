@@ -3,6 +3,12 @@
     fill: lightblue;
 }
 
+.chart circle {
+    stroke: white;
+    fill: lightgreen;
+}
+
+
 #rsload {
     border:1px solid darkgrey;
     width:95%;
