@@ -27,7 +27,7 @@ var region_load_report =
 	{"hostname":"rs4","regions":3}
     ];
 
-bar_chart("#rsload", region_load_report, 
+var chart = bar_chart("#rsload", region_load_report, 
 	  function hostname_is_x_axis(regionserver) {
 	      return regionserver.hostname;
 	  },

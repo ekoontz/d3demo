@@ -64,8 +64,11 @@ function bar_chart(dom_id,data,datum_to_x,datum_to_y) {
 	.attr("text-anchor", "right")
 	.text(function(datum){ return datum_to_x(datum);});
     
-    // 3. ticks
+    // 3. ticks.
     ticks(chart,max_value,bar_width*data.length,bar_chart_height,data.length);
+    
+    return chart;
 }
+
 
 
