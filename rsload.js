@@ -28,5 +28,9 @@ var region_load_report =
     ];
 
 bar_chart("#rsload", region_load_report, 
-	  function to_x(regionserver) {return regionserver.hostname;},
-	  function to_y(regionserver) {return regionserver.regions;});
+	  function hostname_is_x_axis(regionserver) {
+	      return regionserver.hostname;
+	  },
+	  function number_of_regions_is_y_axis(regionserver) {
+	      return regionserver.regions;
+	  });
