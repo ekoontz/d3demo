@@ -4,8 +4,7 @@ var chart;
 var mycircles;
 
 function hello_world(dom_id) {
-    // console.info() is very useful for debugging.
-    console.info("HELLO WORLD!");
+    console.info("Setting up the SVG chart");
 
     chart = d3.select(dom_id).append("svg")
 	.attr("class", "chart")
@@ -28,9 +27,23 @@ function hello_world(dom_id) {
 	attr("r",get_radius_from_circle).
 	attr("id",function(c) {return c.id;});
 
+    setInterval(function() {
+	redraw();
+    }, 1500);
+    
+}
 
-    console.info("exiting the stage.");
-
-    chart.selectAll("circle").exit();
-
+function redraw() {
+    chart.selectAll("circle").data(mycircles).
+	transition().
+	duration(1000)
+	.attr("cy", function(d) { 
+	    d.y = d.y - 5;
+	    return d.y;
+	    
+	})
+	.attr("cx", function(d) { 
+	    d.x = d.x + 5;
+	    return d.x;
+	});
 }
