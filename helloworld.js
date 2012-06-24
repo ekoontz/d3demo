@@ -30,51 +30,17 @@ function hello_world(dom_id) {
     // Simplest selector case: just an array.
     simple = d3.select("#simple");
 
-    dataV1 = simple.selectAll("div").data([4,  8,  15, 16,  23,  42]);
-    // After this, the html appearance is [4,8,15,16,23,42]
-    dataV1.enter().append("div").text(function(d) {return d;});
+    update_divs(simple,[4,8,15,16,23,42],
+		function(d) {return d;});
 
-    // After this, the html appearance is [4,8,15,16,23,42].
-    html_appearance(simple);
+    update_divs(simple,[1,2,4,8,16,32],
+		function(d) {return d;});
 
-    dataV2 = simple.selectAll("div").data([1,  2,  4,   8,  16,  32],
-					function(d) {return d;});
+    update_divs(simple,[8,16],
+		function(d) {return d;});
 
-    // Adds things that are not in dataV1 but in dataV2.
-    // (namely: 1,2,32).
-    dataV2.enter().append("div").text(function(d) {return d;});
-
-    // After this, the html appearance is [4,8,15,16,23,42,1,2,32].
-    html_appearance(simple);
-
-    // Removes the things that are in dataV1 but not dataV2.
-    // (namely: 15,23,42).
-    dataV2.exit().remove();
-    // After this, the html appearance is [4,8,16,1,2,32].
-    html_appearance(simple);
-
-    dataV3 = simple.selectAll("div").data([8,16],
-					  function(d) {return d;});
-
-    // Removes things that are not in V3.
-    dataV3.exit().remove();
-    // [8,16]
-    html_appearance(simple);
-
-    dataV4 = simple.selectAll("div").data([1,2,3,16],
-					  function(d) {return d;});
-
-    // Add things unique to V4: [1,2,3].
-
-    dataV4.enter().append("div").text(function(d) {return d;});
-
-    // [8,16,1,2,3]
-    html_appearance(simple);
-
-    // Removes things that not in V4.
-    dataV4.exit().remove();
-    // now looks like: [16,1,2,3]
-    html_appearance(simple);
+    update_divs(simple, [1,2,3,16], 
+		function(d) {return d;});
 
     earth = {"r": 50, "x": 100, "y":100, "id": "earth"};
     mars  = {"r": 35, "x": 150, "y":85, "id": "mars"};
@@ -177,9 +143,25 @@ function log_state_transition(state) {
     return state;
 }
 
+function update_divs(dom_node, data, index_fn) {
+    console.log("pre:" + html_appearance(dom_node));
+    console.log("new data:  " + data);
+    var newdata = dom_node.selectAll("div").data(data,index_fn);
+
+    // Add things unique to input_data.
+    newdata.enter().append("div").text(function(d) {return d;});
+
+    console.log("post-append, pre-remove:" + html_appearance(dom_node));
+
+    // Remove things not in new data.
+    newdata.exit().remove();
+
+    console.log("post:" + html_appearance(dom_node));
+}
+
 // get the innerHTML of every <div> in the given dom_node and return as a string.
 function html_appearance(dom_node) {
-    console.log("div appearance: " + dom_node.selectAll("div")[0].
-		map(function(d) {return d.innerHTML;}));
+    return "div appearance: " + dom_node.selectAll("div")[0].
+	map(function(d) {return d.innerHTML;});
 
 }

@@ -32,9 +32,10 @@
 }
 
 .learning div {
+    text-align:center;
     float:left;
     width:auto;
-    border:1px dashed red;
-    width:3em;
-    padding:3px;
+    border:1px solid red;
+    width:2em;
+    margin-left:0.5em;
 }
