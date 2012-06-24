@@ -20,3 +20,17 @@
     stroke: lightgreen;
     fill: lightyellow;
 }
+
+#foo {
+    border:2px solid blue;
+    width:auto;
+    float:left;
+}
+
+#foo div {
+    float:left;
+    width:auto;
+    border:1px dashed red;
+    width:3em;
+    padding:3px;
+}
