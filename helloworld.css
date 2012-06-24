@@ -21,13 +21,17 @@
     fill: lightyellow;
 }
 
-#foo {
+.learning {
     border:2px solid blue;
-    width:auto;
+    width:99%;
+    margin-bottom:1em;
+    padding-left:0.5%;
+    padding-top:0.5em;
+    padding-bottom:0.5em;
     float:left;
 }
 
-#foo div {
+.learning div {
     float:left;
     width:auto;
     border:1px dashed red;

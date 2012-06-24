@@ -128,3 +128,9 @@ button:hover {
 .highlight pre {
   overflow-x: auto;
 }
+
+#links {
+    float:left;
+    width:99%;
+}
+
