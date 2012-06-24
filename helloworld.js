@@ -13,8 +13,8 @@ var moon;
 var data_array;
 
 var simple;
-var olddata;
-var newdata;
+var dataV1,dataV2,dataV3;
+var dataV2;
 
 function hello_world(dom_id) {
     state = state_transition(state);
@@ -30,31 +30,30 @@ function hello_world(dom_id) {
     // Simplest selector case: just an array.
     simple = d3.select("#simple");
 
-    olddata = simple.selectAll("div").data([4,  8,  15, 16,  23,  42]);
+    dataV1 = simple.selectAll("div").data([4,  8,  15, 16,  23,  42]);
     // After this, the html appearance is [4,8,15,16,23,42]
-    olddata.enter().append("div").text(function(d) {return d;});
+    dataV1.enter().append("div").text(function(d) {return d;});
 
     // After this, the html appearance is [4,8,15,16,23,42].
     html_appearance(simple);
 
-    newdata = simple.selectAll("div").data([1,  2,  4,   8,  16,  32],
+    dataV2 = simple.selectAll("div").data([1,  2,  4,   8,  16,  32],
 					function(d) {return d;});
 
-    // Adds things that are not in olddata but in newdata.
+    // Adds things that are not in dataV1 but in dataV2.
     // (namely: 1,2,32).
-    newdata.enter().append("div").text(function(d) {return d;});
+    dataV2.enter().append("div").text(function(d) {return d;});
 
     // After this, the html appearance is [4,8,15,16,23,42,1,2,32].
     html_appearance(simple);
 
-    // Removes the things that are in olddata but not newdata.
+    // Removes the things that are in dataV1 but not dataV2.
     // (namely: 15,23,42).
-    newdata.exit().remove();
+    dataV2.exit().remove();
+
 
     // After this, the html appearance is [4,8,16,1,2,32].
     html_appearance(simple);
-
-
 
 
 
