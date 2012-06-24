@@ -13,7 +13,7 @@ var moon;
 var data_array;
 
 var simple;
-var dataV1,dataV2,dataV3;
+var dataV1,dataV2,dataV3,dataV4;
 var dataV2;
 
 function hello_world(dom_id) {
@@ -50,13 +50,31 @@ function hello_world(dom_id) {
     // Removes the things that are in dataV1 but not dataV2.
     // (namely: 15,23,42).
     dataV2.exit().remove();
-
-
     // After this, the html appearance is [4,8,16,1,2,32].
     html_appearance(simple);
 
+    dataV3 = simple.selectAll("div").data([8,16],
+					  function(d) {return d;});
 
+    // Removes things that are not in V3.
+    dataV3.exit().remove();
+    // [8,16]
+    html_appearance(simple);
 
+    dataV4 = simple.selectAll("div").data([1,2,3,16],
+					  function(d) {return d;});
+
+    // Add things unique to V4: [1,2,3].
+
+    dataV4.enter().append("div").text(function(d) {return d;});
+
+    // [8,16,1,2,3]
+    html_appearance(simple);
+
+    // Removes things that not in V4.
+    dataV4.exit().remove();
+    // now looks like: [16,1,2,3]
+    html_appearance(simple);
 
     earth = {"r": 50, "x": 100, "y":100, "id": "earth"};
     mars  = {"r": 35, "x": 150, "y":85, "id": "mars"};
