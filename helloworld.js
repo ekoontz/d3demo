@@ -1,4 +1,4 @@
-// I declared these external so that I can refer to them from the Web Console for Firefox
+n// I declared these external so that I can refer to them from the Web Console for Firefox
 // (or equivalent with other browsers).
 var chart;
 var mycircles;
@@ -10,24 +10,15 @@ var earth;
 var mars;
 var moon;
 
-var data_array;
-
 var simple;
-var dataV1,dataV2,dataV3,dataV4;
-var dataV2;
+
+var people,friends,family;
 
 function hello_world(dom_id) {
-    state = state_transition(state);
-
-    chart = d3.select(dom_id).append("svg")
-	.attr("class", "chart")
-	.attr("width", 500)
-	.attr("height", 300);
-
 
     console.log("Setup of the SVG chart done.");
 
-    // Simplest selector case: just an array.
+    // 1. Simplest selector case: just an array.
     simple = d3.select("#simple");
 
     update_divs(simple,[4,8,15,16,23,42],
@@ -42,13 +33,38 @@ function hello_world(dom_id) {
     update_divs(simple, [1,2,3,16], 
 		function(d) {return d;});
 
+
+    // 2. More complex case: maps.
+    people = [
+	{"name":"bob",
+	 "age":10},
+	{"name":"john",
+	 "age":20},
+	{"name":"sue",
+	 "age":30}];
+
+    friends = [ people[0], people[1]  ];
+    family =  [ people[1], people[2] ];
+
+
+    // 3. selectors as applied to SVG. 
+
+    state = state_transition(state);
+
+
+
+    chart = d3.select(dom_id).append("svg")
+	.attr("class", "chart")
+	.attr("width", 500)
+	.attr("height", 300);
+
     earth = {"r": 50, "x": 100, "y":100, "id": "earth"};
     mars  = {"r": 35, "x": 150, "y":85, "id": "mars"};
     moon  = {"r": 15, "x": 175, "y":65, "id": "moon"};
    
     mycircles = [earth,mars,moon];
 
-    data_array = chart.selectAll("circle").data(mycircles,
+    var data_array = chart.selectAll("circle").data(mycircles,
 						function(d) {return d.id;});
 
     data_array.enter().append("circle").
@@ -161,7 +177,7 @@ function update_divs(dom_node, data, index_fn) {
 
 // get the innerHTML of every <div> in the given dom_node and return as a string.
 function html_appearance(dom_node) {
-    return "div appearance: " + dom_node.selectAll("div")[0].
+    return dom_node.selectAll("div")[0].
 	map(function(d) {return d.innerHTML;});
 
 }
