@@ -22,29 +22,51 @@ function hello_world(dom_id) {
     simple = d3.select("#simple");
 
     update_divs(simple,[4,8,15,16,23,42],
+		function(d) {return d;},
 		function(d) {return d;});
+		
 
     update_divs(simple,[1,2,4,8,16,32],
+		function(d) {return d;},
 		function(d) {return d;});
 
     update_divs(simple,[8,16],
+		function(d) {return d;},
 		function(d) {return d;});
 
-    update_divs(simple, [1,2,3,16], 
+    update_divs(simple,[1,2,3,16], 
+		function(d) {return d;},
 		function(d) {return d;});
-
 
     // 2. More complex case: maps.
     people = [
 	{"name":"bob",
-	 "age":10},
+	 "age":10
+	 ,"ssn":123
+	},
 	{"name":"john",
-	 "age":20},
+	 "age":20
+	 ,"ssn":456
+	},
 	{"name":"sue",
-	 "age":30}];
+	 "age":30
+       ,"ssn":789
+	}];
 
+    // bob and john are friends.
     friends = [ people[0], people[1]  ];
+
+    // bob and sue are family.
     family =  [ people[1], people[2] ];
+
+    update_divs(d3.select("#structs"),friends,
+		function(d) {return d.name;},
+		function(d) {return d.name;});
+
+    update_divs(d3.select("#structs"),family,
+		function(d) {return d.name;},
+		function(d) {return d.name;});
+
 
 
     // 3. selectors as applied to SVG. 
@@ -159,17 +181,18 @@ function log_state_transition(state) {
     return state;
 }
 
-function update_divs(dom_node, data, index_fn) {
+function update_divs(dom_node, data, index_fn,
+		    text_fn) {
     console.log("pre:" + html_appearance(dom_node));
     console.log("new data:  " + data);
     var newdata = dom_node.selectAll("div").data(data,index_fn);
 
-    // Add things unique to input_data.
-    newdata.enter().append("div").text(function(d) {return d;});
+    // Add items unique to input_data.
+    newdata.enter().append("div").text(text_fn);
 
     console.log("post-append, pre-remove:" + html_appearance(dom_node));
 
-    // Remove things not in new data.
+    // Remove items not in new data.
     newdata.exit().remove();
 
     console.log("post:" + html_appearance(dom_node));
