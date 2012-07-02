@@ -31,6 +31,14 @@
     float:left;
 }
 
+div.label {
+    float:right;
+    width:auto;
+    background:yellow;
+    font-size:smaller;
+    margin-right:1%;
+}
+
 .learning div {
     text-align:center;
     float:left;
