@@ -12,7 +12,7 @@ var moon;
 
 var simple;
 
-var people,friends,family;
+var animals,friends,family;
 
 function hello_world(dom_id) {
 
@@ -39,41 +39,48 @@ function hello_world(dom_id) {
 		function(d) {return d;});
 
     // 2. More complex case: maps.
-    people = [
-	{"name":"bob",
-	 "age":10
-	 ,"ssn":123
+    animals = [
+	{"name":"bear",
+	 "age":10,
+	 "animal_id":123
 	},
-	{"name":"john",
-	 "age":20
-	 ,"ssn":456
+	{"name":"cat",
+	 "age":20,
+	 "animal_id":456
 	},
-	{"name":"sue",
-	 "age":30
-       ,"ssn":789
+	{"name":"dog",
+	 "age":30,
+	 "animal_id":789
 	}];
 
-    // bob and john are friends.
-    friends = [ people[0], people[1]  ];
+    // bear and cat are friends.
+    friends = [ animals[0], animals[1] ];
 
-    // bob and sue are family.
-    family =  [ people[1], people[2] ];
+    // cat and dog are family.
+    family =  [ animals[1], animals[2] ];
 
-    update_divs(d3.select("#structs"),friends,
-		function(d) {return d.name;},
+    update_divs(d3.select("#structs"),
+
+		friends,
+
+		// index_fn: what key to use to compare items for equality.
+		function(d) {return d.animal_id;},  
+
+		// text_fn: what to display in the output div.
+		function(d) {return d.name;}); 
+
+    update_divs(d3.select("#structs"),
+
+		family,
+
+		// index_fn: what key to use to compare items for equality.
+		function(d) {return d.animal_id;},
+
+		// text_fn: what to display in the output div.
 		function(d) {return d.name;});
-
-    update_divs(d3.select("#structs"),family,
-		function(d) {return d.name;},
-		function(d) {return d.name;});
-
-
 
     // 3. selectors as applied to SVG. 
-
     state = state_transition(state);
-
-
 
     chart = d3.select(dom_id).append("svg")
 	.attr("class", "chart")
@@ -182,9 +189,9 @@ function log_state_transition(state) {
 }
 
 function update_divs(dom_node, data, index_fn,
-		    text_fn) {
+		     text_fn) {
     console.log("pre:" + html_appearance(dom_node));
-    console.log("new data:  " + data);
+    console.log("new data:  " + data.map(text_fn));
     var newdata = dom_node.selectAll("div").data(data,index_fn);
 
     // Add items unique to input_data.
