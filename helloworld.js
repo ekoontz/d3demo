@@ -69,16 +69,17 @@ function hello_world(dom_id) {
 		// text_fn: what to display in the output div.
 		function(d) {return d.name;}); 
 
-    update_divs(d3.select("#structs"),
-
-		family,
-
-		// index_fn: what key to use to compare items for equality.
-		function(d) {return d.animal_id;},
-
-		// text_fn: what to display in the output div.
-		function(d) {return d.name;});
-
+    if (true) {
+	update_divs(d3.select("#structs"),
+		    
+		    family,
+		    
+		    // index_fn: what key to use to compare items for equality.
+		    function(d) {return d.animal_id;},
+		    
+		    // text_fn: what to display in the output div.
+		    function(d) {return d.name;});
+    }
     // 3. selectors as applied to SVG. 
     state = state_transition(state);
 
@@ -188,14 +189,25 @@ function log_state_transition(state) {
     return state;
 }
 
-function update_divs(dom_node, data, index_fn,
+function update_divs(dom_node, newdata_array, index_fn,
 		     text_fn) {
     console.log("pre:" + html_appearance(dom_node));
-    console.log("new data:  " + data.map(text_fn));
-    var newdata = dom_node.selectAll("div").data(data,index_fn);
+    console.log("adding new data:  " + newdata_array.map(text_fn));
+
+    var newdata = dom_node.selectAll("div").data(newdata_array,index_fn);
 
     // Add items unique to input_data.
     newdata.enter().append("div").text(text_fn);
+
+    // This doesn't actually transition because style is an attribute,
+    // while background color is simply part of the style value: d3 doesn't
+    // try to analyze within it apparently:
+    // Only with SVG will we be able to modify the object's appearance with
+    // given attributes (e.g. .attr("x",500)).
+
+    newdata.transition()
+	.duration(5000)
+	.attr("style", function(d, i) { return "background:lightgreen"; });
 
     console.log("post-append, pre-remove:" + html_appearance(dom_node));
 
