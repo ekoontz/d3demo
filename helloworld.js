@@ -71,6 +71,21 @@ function hello_world(dom_id) {
 
     update_svg(d3.select("#simple_svg"),
 	       
+	       friends,
+	       
+	       // index_fn: what key to use to compare items for equality.
+	       function(d) {return d.animal_id;},  
+	       
+	       // text_fn: what to display in the output SVG circle.
+	       function(d) {return d.name;},
+	       
+	       // where on x dimension to start the rows of circles.
+	       50,
+	       // where on x dimension to start the labels.
+	       50);
+
+    update_svg(d3.select("#simple_svg"),
+	       
 	       family,
 	       
 	       // index_fn: what key to use to compare items for equality.
@@ -84,21 +99,18 @@ function hello_world(dom_id) {
 	       // where on x dimension to start the labels.
 	       50);
 
-    
 
-    if (true) {
-	update_divs(d3.select("#structs"),
-		    
-		    family,
-		    
-		    // index_fn: what key to use to compare items for equality.
-		    function(d) {return d.animal_id;},
-		    
-		    // text_fn: what to display in the output div.
-		    function(d) {return d.name;},
-		    50,
-		    50);
-    }
+    update_divs(d3.select("#structs"),
+		
+		family,
+		
+		// index_fn: what key to use to compare items for equality.
+		function(d) {return d.animal_id;},
+		
+		// text_fn: what to display in the output div.
+		function(d) {return d.name;},
+		50,
+		50);
 
     // 3. selectors as applied to SVG. 
     state = state_transition(state);
@@ -248,19 +260,16 @@ function update_svg(dom_node, newdata_array, index_fn,
 
 
     // Remove items not in new data.
-    newdata.exit().transition()
+/*    newdata.exit().transition()
 	.duration(5000)
-	.attr("r",500);
-
+	.attr("x",500).remove();*/
     newdata.exit().remove();
+
     console.log("/update_svg.");
 }
 
 function update_divs(dom_node, newdata_array, index_fn,
 		     text_fn) {
-    console.log("pre:" + html_appearance(dom_node));
-    console.log("adding new data:  " + newdata_array.map(text_fn));
-
     var newdata = dom_node.selectAll("div").data(newdata_array,index_fn);
 
     // Add items unique to input_data.
@@ -276,12 +285,8 @@ function update_divs(dom_node, newdata_array, index_fn,
 	.duration(5000)
 	.attr("style", function(d, i) { return "background:lightgreen"; });
 
-    console.log("post-append, pre-remove:" + html_appearance(dom_node));
-
     // Remove items not in new data.
     newdata.exit().remove();
-
-    console.log("post:" + html_appearance(dom_node));
 }
 
 // get the innerHTML of every <div> in the given dom_node and return as a string.
