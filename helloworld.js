@@ -121,27 +121,6 @@ function update_svg(svg, newdata_array, index_fn,
     console.log("/update_svg.");
 }
 
-function update_divs(dom_node, newdata_array, index_fn,
-		     text_fn) {
-    var newdata = dom_node.selectAll("div").data(newdata_array,index_fn);
-
-    // Add items unique to input_data.
-    newdata.enter().append("div").text(text_fn);
-
-    // This doesn't actually transition because style is an attribute,
-    // while background color is simply part of the style value: d3 doesn't
-    // try to analyze within it apparently:
-    // Only with SVG will we be able to modify the object's appearance with
-    // given attributes (e.g. .attr("x",500)).
-
-    newdata.transition()
-	.duration(5000)
-	.attr("style", function(d, i) { return "background:lightgreen"; });
-
-    // Remove items not in new data.
-    newdata.exit().remove();
-}
-
 // get the innerHTML of every <div> in the given dom_node and return as a string.
 function html_appearance(dom_node) {
     return dom_node.selectAll("div")[0].
