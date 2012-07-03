@@ -5,7 +5,7 @@ var mycircles;
 
 var state = "BEGIN_STATE";
 var iterations = 0;
-
+var spread_x = 0;
 var earth;
 var mars;
 var moon;
@@ -69,6 +69,23 @@ function hello_world(dom_id) {
 		// text_fn: what to display in the output div.
 		function(d) {return d.name;}); 
 
+    update_svg(d3.select("#simple_svg"),
+	       
+	       family,
+	       
+	       // index_fn: what key to use to compare items for equality.
+	       function(d) {return d.animal_id;},  
+	       
+	       // text_fn: what to display in the output SVG circle.
+	       function(d) {return d.name;},
+	       
+	       // where on x dimension to start the rows of circles.
+	       50,
+	       // where on x dimension to start the labels.
+	       50);
+
+    
+
     if (true) {
 	update_divs(d3.select("#structs"),
 		    
@@ -78,8 +95,11 @@ function hello_world(dom_id) {
 		    function(d) {return d.animal_id;},
 		    
 		    // text_fn: what to display in the output div.
-		    function(d) {return d.name;});
+		    function(d) {return d.name;},
+		    50,
+		    50);
     }
+
     // 3. selectors as applied to SVG. 
     state = state_transition(state);
 
@@ -187,6 +207,48 @@ function state_transition(state) {
 function log_state_transition(state) {
     console.log("moving to state: " + state);
     return state;
+}
+
+
+function update_svg(dom_node, newdata_array, index_fn,
+		    text_fn, spread_x,spread_x_label) {
+    console.log("update_svg:spx:" + spread_x);
+    var current_x = spread_x;
+
+    var svg = dom_node.append("svg")
+	.attr("class", "chart")
+	.attr("width", 500)
+	.attr("height", 100);
+
+    var newdata = svg.selectAll("circle").data(newdata_array,index_fn);
+
+    // Add items unique to input_data.
+    newdata.enter().append("circle").
+	attr("cx",function(c) {
+	    console.log("spread_x:" + spread_x);
+	    retval = spread_x;
+	    spread_x = spread_x + 100; 
+	    return retval;
+	}).
+	attr("cy",function(c) {return 45;}).
+        attr("r", function(c) {return 35;}).
+        attr("id",function(animal) {return animal.name + spread_x;});
+
+    var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
+    newlabels.enter().append("text").
+	attr("x",function(c) {
+	    console.log("spread_x_label:" + spread_x_label);
+	    retval = spread_x_label;
+	    spread_x_label = spread_x_label + 100;
+	    return retval;}).
+	attr("y",function(c) {return 45;}).
+        attr("r", function(c) {return 35;}).
+	text(function(animal) {return animal.name;});
+
+
+    // Remove items not in new data.
+    newdata.exit().remove();
+    console.log("/update_svg.");
 }
 
 function update_divs(dom_node, newdata_array, index_fn,

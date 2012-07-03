@@ -3,6 +3,16 @@
     fill: black;
 }
 
+#simple_svg {
+    height:100px;
+}
+
+#simple_svg circle {
+    stroke-width:1;
+    stroke: lightgreen;
+    fill: lightyellow;
+}
+
 #earth {
     stroke: salmon;
     stroke-width:3;
@@ -32,11 +42,16 @@
 }
 
 div.label {
+    border-top:2px solid blue;
+    border-left:2px solid blue;
+    border-right:2px solid blue;
+    border-bottom:0px;
     float:right;
     width:auto;
     background:yellow;
     font-size:smaller;
     margin-right:1%;
+    padding:0.5%;
 }
 
 .learning div {
