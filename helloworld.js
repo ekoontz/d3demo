@@ -63,7 +63,7 @@ function hello_world(dom_id) {
 	       // text_fn: what to display in the output SVG circle.
 	       function(d) {return d.name;});
 
-    // then show friends.
+    // then show family.
     update_svg(svg,
 	       
 	       family,
