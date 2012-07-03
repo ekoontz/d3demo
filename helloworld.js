@@ -1,4 +1,4 @@
-n// I declared these external so that I can refer to them from the Web Console for Firefox
+// I declared these external so that I can refer to them from the Web Console for Firefox
 // (or equivalent with other browsers).
 var chart;
 var mycircles;
