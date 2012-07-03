@@ -226,7 +226,7 @@ function update_svg(dom_node, newdata_array, index_fn,
     newdata.enter().append("circle").
 	attr("cx",function(c) {
 	    console.log("spread_x:" + spread_x);
-	    retval = spread_x;
+	    var retval = spread_x;
 	    spread_x = spread_x + 100; 
 	    return retval;
 	}).
@@ -234,11 +234,12 @@ function update_svg(dom_node, newdata_array, index_fn,
         attr("r", function(c) {return 35;}).
         attr("id",function(animal) {return animal.name + spread_x;});
 
+
     var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
     newlabels.enter().append("text").
 	attr("x",function(c) {
 	    console.log("spread_x_label:" + spread_x_label);
-	    retval = spread_x_label;
+	    var retval = spread_x_label;
 	    spread_x_label = spread_x_label + 100;
 	    return retval;}).
 	attr("y",function(c) {return 45;}).
@@ -247,6 +248,10 @@ function update_svg(dom_node, newdata_array, index_fn,
 
 
     // Remove items not in new data.
+    newdata.exit().transition()
+	.duration(5000)
+	.attr("r",500);
+
     newdata.exit().remove();
     console.log("/update_svg.");
 }
