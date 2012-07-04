@@ -53,6 +53,7 @@ function hello_world(dom_id) {
 	.attr("height", 100);
 
     // first show friends.
+    console.log("switching to friends.");
     update_svg(svg,
 	       
 	       friends,
@@ -63,31 +64,46 @@ function hello_world(dom_id) {
 	       // text_fn: what to display in the output SVG circle.
 	       function(d) {return d.name;});
 
-    // then show family.
+    setInterval(function() {
+	console.log("switching to family.");
+	update_svg(svg,
+		   
+		   family,
+		   
+		   // index_fn: what key to use to compare items for equality.
+		   function(d) {return d.animal_id;},  
+		   
+		   // text_fn: what to display in the output SVG circle.
+		   function(d) {return d.name;});
+	
+	setInterval(function() {
+	    console.log("switching to just cat.");
+	    update_svg(svg,
+		       
+		       [ animals[2] ],
+		       
+		       // index_fn: what key to use to compare items for equality.
+		       function(d) {return d.animal_id;},  
+		       
+		       // text_fn: what to display in the output SVG circle.
+		       function(d) {return d.name;})
+	}, 5000);
+
+    }, 5000);
+
+}
+
+function show_family(svg,family) {
     update_svg(svg,
 	       
 	       family,
 	       
 	       // index_fn: what key to use to compare items for equality.
-		   function(d) {return d.animal_id;},  
+	       function(d) {return d.animal_id;},  
 	       
 	       // text_fn: what to display in the output SVG circle.
-		   function(d) {return d.name;}
+	       function(d) {return d.name;}
 	      );
-
-    // then just cat.
-    if (false) {
-    update_svg(svg,
-	       
-	       [ animals[2] ],
-	       
-	       // index_fn: what key to use to compare items for equality.
-		   function(d) {return d.animal_id;},  
-	       
-	       // text_fn: what to display in the output SVG circle.
-		   function(d) {return d.name;}
-	      );}
-
 }
 
 function update_svg(svg, newdata_array, index_fn,
@@ -95,27 +111,34 @@ function update_svg(svg, newdata_array, index_fn,
     var newdata = svg.selectAll("circle").data(newdata_array,index_fn);
 
     // Add items unique to input_data.
-    newdata.enter().append("circle").
+    newdata.enter().insert("circle").
 	attr("cx",function(c) {
 	    return c.x;
 	}).
-	attr("cy",function(c) {return 45;}).
-        attr("r", function(c) {return 25;});
+	attr("cy",function(c) {return -100;}).
+        attr("r", function(c) {return 25;}).
+	transition().
+	duration(3000).
+	attr("cy",65);
+
     
     var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
     newlabels.enter().append("text").
 	attr("x",function(c) {
 	    return c.x;}).
-	attr("y",function(c) {return 45;}).
+	attr("y",function(c) {return -100;}).
         attr("r", function(c) {return 25;}).
-	text(text_fn);
+	text(text_fn).
+	transition().
+	duration(3000).
+	attr("y",65);
 
+//    newdata.transition().duration(1000).attr("cy",function(c) {return c.cy - 25;});
 
     // Remove items not in new data.
     newdata.exit().transition().duration(3000).attr("cy",-100).remove();
 
-
-    // Remove items not in new data.
+    // Remove labels not in new data.
     newlabels.exit().transition().duration(3000).attr("y",-100).remove();
 
     console.log("/update_svg.");
