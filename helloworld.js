@@ -42,12 +42,13 @@ function hello_world(dom_id) {
     var svg = d3.select("#simple_svg").append("svg")
 	.attr("class", "chart")
 	.attr("width", 500)
-	.attr("height", 100);
+	.attr("height", 500);
 
     cycle_through_animals([make_set(friends),
 			   make_set(family),
-			   make_set(friends),
-			   make_set(family)
+			   make_set(canine),
+			   make_set(wild),
+			   make_set(friends)
 			  ],
 			   svg);
 
@@ -129,11 +130,11 @@ function update_svg(svg, newdata_array, index_fn,
     // Remove items not in new data.
     newdata.exit().transition().duration(500)
 	.attr("cy",
-	      function(x) {
-		  console.log("removing:" + x.name);
-		  return 500;
+	      function(animal) {
+		  console.log("removing:" + animal.name + "/" + animal.animal_id);
+		  return 200;
 	      }).remove();
 
     // Remove labels not in new data.
-    newlabels.exit().transition().duration(500).attr("y",500).remove();
+    newlabels.exit().transition().duration(500).attr("y",200).remove();
 }
