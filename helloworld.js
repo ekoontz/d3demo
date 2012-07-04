@@ -1,46 +1,31 @@
 // I declared these external so that I can refer to them from the Web Console for Firefox
 // (or equivalent with other browsers).
-var chart;
-var mycircles;
 
-var state = "BEGIN_STATE";
-var iterations = 0;
-var spread_x = 0;
-var earth;
-var mars;
-var moon;
-
-var simple;
+var animals = [
+    {"name":"bear",
+     "age":10,
+     "x":25
+    },
+    {"name":"otter",
+     "age":15,
+     "x":85
+    },
+    {"name":"cat",
+     "age":20,
+     "x":150
+    },
+    {"name":"dog",
+     "age":25,
+     "x":210
+    },
+    {"name":"wolf",
+     "age":30,
+     "x":270
+    }
+];
 
 function hello_world(dom_id) {
 
-    var animals = [
-	{"name":"bear",
-	 "age":10,
-	 "animal_id":1,
-	 "x":25
-	},
-	{"name":"otter",
-	 "age":15,
-	 "animal_id":2,
-	 "x":85
-	},
-	{"name":"cat",
-	 "age":20,
-	 "animal_id":3,
-	 "x":150
-	},
-	{"name":"dog",
-	 "age":30,
-	 "animal_id":4,
-	 "x":210
-	},
-	{"name":"wolf",
-	 "age":35,
-	 "animal_id":5,
-	 "x":270
-	}
-    ];
 
     // bear and cat.
     var friends = [ animals[0], animals[1] ,animals[2] ];
@@ -59,11 +44,27 @@ function hello_world(dom_id) {
 	.attr("width", 500)
 	.attr("height", 100);
 
-    cycle_through_animals([
-	friends,family,friends
-    ],
-			  svg);
+    cycle_through_animals([make_set(friends),
+			   make_set(family),
+			   make_set(friends),
+			   make_set(family),
+			   make_set(friends),
+			   make_set(family),
+			   make_set(friends)
+			  ],
+			   svg);
 
+}
+
+var current_animal_id = 0;
+
+function make_set(set) {
+    return set.map(function(x) {
+	return {"name": x.name,
+		"x": x.x,
+		"animal_id": current_animal_id++
+	       };
+    });
 }
 
 function cycle_through_animals(animal_sets,svg) {
@@ -92,21 +93,27 @@ function cycle_through_animals(animal_sets,svg) {
     }
 }
 
+function complement(all_animals,subset) {
+    return all_animals;
+}
+
 function update_svg(svg, newdata_array, index_fn,
 		    text_fn) {
+    var set_complement = complement(animals,newdata_array);
+
     var newdata = svg.selectAll("circle").data(newdata_array,index_fn);
 
     // Add items unique to input_data.
-    newdata.enter().insert("circle").
+    newdata.enter().append("circle").
 	attr("cx",function(c) {
+	    console.log("appending: " + c.name + "/" + c.animal_id);
 	    return c.x;
 	}).
 	attr("cy",function(c) {return -100;}).
         attr("r", function(c) {return 25;}).
 	transition().
-	duration(1000).
+	duration(500).
 	attr("cy",65);
-
     
     var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
     newlabels.enter().append("text").
@@ -116,14 +123,17 @@ function update_svg(svg, newdata_array, index_fn,
         attr("r", function(c) {return 25;}).
 	text(text_fn).
 	transition().
-	duration(2000).
-	attr("y",65);
-
-//    newdata.transition().duration(1000).attr("cy",function(c) {return c.cy - 25;});
+	duration(500).
+	attr("y",68);
 
     // Remove items not in new data.
-    newdata.exit().transition().duration(3000).attr("cy",-100).remove();
+    newdata.exit().transition().duration(500)
+	.attr("cy",
+	      function(x) {
+		  console.log("removing:" + x.name);
+		  return 500;
+	      }).remove();
 
     // Remove labels not in new data.
-    newlabels.exit().transition().duration(3000).attr("y",-100).remove();
+    newlabels.exit().transition().duration(500).attr("y",500).remove();
 }
