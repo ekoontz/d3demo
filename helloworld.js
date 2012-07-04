@@ -85,7 +85,7 @@ function cycle_through_animals(animal_sets,svg) {
 	if (animal_sets.length > 0) {
 	    setInterval(function() {
 		cycle_through_animals(animal_sets,svg);
-	    },2000);
+	    },3000);
 	} else {
 	    console.info("DONE.");
 	}
@@ -113,7 +113,7 @@ function update_svg(svg, newdata_array, index_fn,
 	attr("cy",function(c) {return -100;}).
         attr("r", function(c) {return 25;}).
 	transition().
-	duration(500).
+	duration(2500).
 	attr("cy",65);
     
     var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
@@ -124,11 +124,13 @@ function update_svg(svg, newdata_array, index_fn,
         attr("r", function(c) {return 25;}).
 	text(text_fn).
 	transition().
-	duration(500).
+	duration(2500).
 	attr("y",68);
 
     // Remove items not in new data.
-    newdata.exit().transition().duration(500)
+    newdata.exit().transition().duration(3500)
+        .style("fill","white")
+        .style("stroke","white")
 	.attr("cy",
 	      function(animal) {
 		  console.log("removing:" + animal.name + "/" + animal.animal_id);
@@ -136,5 +138,7 @@ function update_svg(svg, newdata_array, index_fn,
 	      }).remove();
 
     // Remove labels not in new data.
-    newlabels.exit().transition().duration(500).attr("y",200).remove();
+    newlabels.exit().transition().duration(3500)
+        .style("color","white")
+	.attr("y",200).remove();
 }

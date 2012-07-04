@@ -1,34 +1,15 @@
-.chart circle {
-    stroke: white;
-    fill: black;
-}
-
 #simple_svg {
     height:250px;
 }
 
-#simple_svg circle {
+text {
+    stroke:#666;
+}    
+
+circle {
     stroke-width:1;
     stroke: lightgreen;
-    fill: lightyellow;
-}
-
-#earth {
-    stroke: salmon;
-    stroke-width:3;
     fill: lightgreen;
-}
-
-#mars {
-    stroke-width:2;
-    stroke: lightyellow;
-    fill: salmon;
-}
-
-#moon {
-    stroke-width:1;
-    stroke: lightgreen;
-    fill: lightyellow;
 }
 
 .learning {
