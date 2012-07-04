@@ -47,10 +47,7 @@ function hello_world(dom_id) {
     cycle_through_animals([make_set(friends),
 			   make_set(family),
 			   make_set(friends),
-			   make_set(family),
-			   make_set(friends),
-			   make_set(family),
-			   make_set(friends)
+			   make_set(family)
 			  ],
 			   svg);
 
@@ -84,13 +81,16 @@ function cycle_through_animals(animal_sets,svg) {
 
 	update_svg(svg,animal_set,index_fn,text_fn);
 	
-	setInterval(function() {
-	    cycle_through_animals(animal_sets,svg);
-	}, 2000);
-    } else {
-	console.log("DONE.");
-	return false;
+	if (animal_sets.length > 0) {
+	    setInterval(function() {
+		cycle_through_animals(animal_sets,svg);
+	    },2000);
+	} else {
+	    console.info("DONE.");
+	}
+
     }
+    return false;
 }
 
 function complement(all_animals,subset) {
