@@ -52,9 +52,14 @@ function hello_world(dom_id) {
 	.attr("width", 500)
 	.attr("height", 500);
 
-    cycle_through_animals(function() {random_set();},
+    show_animal_set(function() {random_set();},
 			  svg);
 
+    setInterval(function() {
+	show_animal_set(function() {random_set();},
+			      svg);
+
+    },3000);
 }
 
 var current_animal_id = 0;
@@ -68,7 +73,7 @@ function make_set(set) {
     });
 }
 
-function cycle_through_animals(choose_fn,svg) {
+function show_animal_set(choose_fn,svg) {
     // index_fn: what key to use to compare items for equality.
     var index_fn = function(d) {return d.animal_id;};
     
@@ -84,10 +89,6 @@ function cycle_through_animals(choose_fn,svg) {
     
     update_svg(svg,animal_set,index_fn,text_fn);
 	
-    setInterval(function() {
-	return cycle_through_animals(choose_fn,svg);
-    },3000);
-    return false;
 }
 
 function complement(all_animals,subset) {
@@ -108,7 +109,7 @@ function update_svg(svg, newdata_array, index_fn,
 	}).
 	attr("cy",function(c) {return -100;}).
         attr("r", function(c) {return 25;}).
-	transition().duration(500).
+	transition().duration(1500).
 	attr("cy",65);
     
     var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
@@ -118,11 +119,11 @@ function update_svg(svg, newdata_array, index_fn,
 	attr("y",function(c) {return -100;}).
         attr("r", function(c) {return 25;}).
 	text(text_fn).
-	transition().duration(500).
+	transition().duration(1500).
 	attr("y",68);
 
     // Remove items not in new data.
-    newdata.exit().transition().duration(500)
+    newdata.exit().transition().duration(2500)
         .style("fill","white")
         .style("stroke","white")
 	.attr("cy",
@@ -132,7 +133,7 @@ function update_svg(svg, newdata_array, index_fn,
 	      }).remove();
 
     // Remove labels not in new data.
-    newlabels.exit().transition().duration(500)
+    newlabels.exit().transition().duration(2500)
         .style("stroke","white")
         .style("fill","white")
 	.attr("y",200).remove();
