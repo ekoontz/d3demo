@@ -50,7 +50,7 @@ function hello_world(dom_id) {
     var svg = d3.select("#simple_svg").append("svg")
 	.attr("class", "chart")
 	.attr("width", 500)
-	.attr("height", 500);
+	.attr("height", 300);
 
     show_animal_set(function() {random_set();},
 			  svg);
@@ -59,7 +59,7 @@ function hello_world(dom_id) {
 	show_animal_set(function() {random_set();},
 			      svg);
 
-    },3000);
+    },2500);
 }
 
 var current_animal_id = 0;
@@ -85,7 +85,7 @@ function show_animal_set(choose_fn,svg) {
     
     console.log("switching to set:" + animal_set.map(text_fn));
     
-    d3.select("#status").html("SET IS: " + animal_set.map(text_fn));
+    d3.select("#status").html("Now entering: " + animal_set.map(text_fn));
     
     update_svg(svg,animal_set,index_fn,text_fn);
 	
@@ -110,7 +110,7 @@ function update_svg(svg, newdata_array, index_fn,
 	attr("cy",function(c) {return -50;}).
         attr("r", function(c) {return 25;}).
 	transition().duration(2000).
-	attr("cy",65);
+	attr("cy",140);
     
     var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
     newlabels.enter().append("text").
@@ -120,7 +120,7 @@ function update_svg(svg, newdata_array, index_fn,
         attr("r", function(c) {return 25;}).
 	text(text_fn).
 	transition().duration(2000).
-	attr("y",68);
+	attr("y",143);
 
     // Remove items not in new data.
     newdata.exit().transition().duration(2500)
@@ -129,12 +129,12 @@ function update_svg(svg, newdata_array, index_fn,
 	.attr("cy",
 	      function(animal) {
 		  console.log("removing:" + animal.name + "/" + animal.animal_id);
-		  return 200;
+		  return 300;
 	      }).remove();
 
     // Remove labels not in new data.
     newlabels.exit().transition().duration(2500)
         .style("stroke","white")
         .style("fill","white")
-	.attr("y",200).remove();
+	.attr("y",300).remove();
 }
