@@ -107,19 +107,19 @@ function update_svg(svg, newdata_array, index_fn,
 	    console.log("appending: " + c.name + "/" + c.animal_id);
 	    return c.x;
 	}).
-	attr("cy",function(c) {return -100;}).
+	attr("cy",function(c) {return -50;}).
         attr("r", function(c) {return 25;}).
-	transition().duration(1500).
+	transition().duration(2000).
 	attr("cy",65);
     
     var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
     newlabels.enter().append("text").
 	attr("x",function(c) {
 	    return c.x - 10;}).
-	attr("y",function(c) {return -100;}).
+	attr("y",function(c) {return -50;}).
         attr("r", function(c) {return 25;}).
 	text(text_fn).
-	transition().duration(1500).
+	transition().duration(2000).
 	attr("y",68);
 
     // Remove items not in new data.
