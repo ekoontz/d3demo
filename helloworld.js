@@ -2,26 +2,31 @@
 // (or equivalent with other browsers).
 
 var animals = [
-    {"name":"bear",
-     "age":10,
+    {"name":"bear",  // 0
      "x":25
     },
-    {"name":"otter",
-     "age":15,
+    {"name":"otter", // 1
      "x":85
     },
-    {"name":"cat",
-     "age":20,
+    {"name":"cat",   // 2
      "x":150
     },
-    {"name":"dog",
-     "age":25,
+    {"name":"dog",   // 3
      "x":210
     },
-    {"name":"wolf",
-     "age":30,
+    {"name":"wolf",  // 4
      "x":270
+    },
+    {"name":"snake", // 5
+     "x":330
+    },
+    {"name":"cow",   // 6
+     "x":390
+    },
+    {"name":"gecko",// 7
+     "x":450
     }
+
 ];
 
 // bear and cat.
@@ -33,10 +38,16 @@ var family =  [ animals[2], animals[3] ];
 // dog and wolf
 var canine = [ animals[3], animals[4] ];
 
-// bear and otter and wolf.
-var wild =  [ animals[0], animals[1] , animals[4] ];
+// bear and otter and wolf and snake.
+var wild =  [ animals[0], animals[1] , animals[4], animals[5], animals[7] ];
 
-var sets = [ friends, family, canine, wild];
+var mammals = [ animals[0], animals[1], animals[2], animals[3], animals[4], animals[6] ];
+
+var reptiles = [ animals[5],animals[7]];
+
+var pets = [animals[2],animals[3],animals[5],animals[7]];
+
+var sets = [ friends, family, canine, wild, mammals, reptiles, pets];
 
 function random_set() {
     var choice = Math.floor(Math.random()*sets.length);
