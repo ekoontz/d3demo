@@ -51,14 +51,9 @@ function hello_world(dom_id) {
 	.attr("class", "chart")
 	.attr("width", 500)
 	.attr("height", 300);
-
-    show_animal_set(function() {random_set();},
-			  svg);
-
+    show_animal_set(svg);
     setInterval(function() {
-	show_animal_set(function() {random_set();},
-			      svg);
-
+	show_animal_set(svg);
     },2500);
 }
 
@@ -73,7 +68,7 @@ function make_set(set) {
     });
 }
 
-function show_animal_set(choose_fn,svg) {
+function show_animal_set(svg) {
     // index_fn: what key to use to compare items for equality.
     var index_fn = function(d) {return d.animal_id;};
     
@@ -83,21 +78,60 @@ function show_animal_set(choose_fn,svg) {
     // show the next set in animal_sets.
     var animal_set = random_set();
     
-    console.log("switching to set:" + animal_set.map(text_fn));
+//    console.log("switching to set:" + animal_set.map(text_fn));
     
     d3.select("#status").html("Now entering: " + animal_set.map(text_fn));
     
     update_svg(svg,animal_set,index_fn,text_fn);
 	
 }
+var existing = null;
 
-function complement(all_animals,subset) {
-    return all_animals;
+function find_animal(needle,haystack) {
+    var i = 0;
+    for(i = 0; i < haystack.length; i++) {
+	if (needle.name == haystack[i].name) {
+	    return true;
+	}
+    }
+    return false;
+}
+
+function complement(existing,newset) {
+    var keep = [];
+    var to_add = newset;
+    var i;
+    if (existing != null) {
+	to_add = [];
+	console.log("existing   :" + existing.map(function(d) {return d.name + "/" + d.animal_id;}));
+	for(i = 0; i < existing.length; i++) {
+	    if (find_animal(existing[i],newset)) {
+		keep.push(existing[i]);
+	    }
+	}
+
+	for(i = 0; i < newset.length; i++) {
+	    if (find_animal(newset[i],existing) == false) {
+		to_add.push(newset[i]);
+	    }
+	}
+    }
+
+    var retval = [];
+    for(i = 0; i < keep.length; i++) {
+	retval.push(keep[i]);
+    }
+    to_add = make_set(to_add);
+    for(i = 0; i < to_add.length; i++) {
+	retval.push(to_add[i]);
+    }
+
+    return retval;
 }
 
 function update_svg(svg, newdata_array, index_fn,
 		    text_fn) {
-    var set_complement = complement(animals,newdata_array);
+    var newdata_array = complement(existing,newdata_array,svg.selectAll("circle"));
 
     var newdata = svg.selectAll("circle").data(newdata_array,index_fn);
 
@@ -109,7 +143,11 @@ function update_svg(svg, newdata_array, index_fn,
 	}).
 	attr("cy",function(c) {return -50;}).
         attr("r", function(c) {return 25;}).
+	style("stroke","white").
+	style("fill","white").
 	transition().duration(2000).
+	style("stroke","lightgreen").
+	style("fill","lightgreen").
 	attr("cy",140);
     
     var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
@@ -118,8 +156,12 @@ function update_svg(svg, newdata_array, index_fn,
 	    return c.x - 10;}).
 	attr("y",function(c) {return -50;}).
         attr("r", function(c) {return 25;}).
+	style("stroke","white").
+	style("fill","white").
 	text(text_fn).
 	transition().duration(2000).
+	style("stroke","#666").
+	style("fill","#666").
 	attr("y",143);
 
     // Remove items not in new data.
@@ -137,4 +179,6 @@ function update_svg(svg, newdata_array, index_fn,
         .style("stroke","white")
         .style("fill","white")
 	.attr("y",300).remove();
+
+    existing = newdata_array;
 }
