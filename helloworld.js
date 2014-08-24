@@ -49,15 +49,7 @@ var pets = [animals[2],animals[3],animals[5],animals[7]];
 
 var sets = [ friends, family, canine, wild, mammals, reptiles, pets];
 
-function random_set() {
-    var choice = Math.floor(Math.random()*sets.length);
-
-    return make_set(sets[choice]);
-
-}
-
 function hello_world(dom_id) {
-
     var svg = d3.select("#simple_svg").append("svg")
 	.attr("class", "chart")
 	.attr("width", 500)
@@ -66,6 +58,11 @@ function hello_world(dom_id) {
     setInterval(function() {
 	show_animal_set(svg);
     },2500);
+}
+
+function random_set() {
+    var choice = Math.floor(Math.random()*sets.length);
+    return make_set(sets[choice]);
 }
 
 var current_animal_id = 0;
