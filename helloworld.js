@@ -179,14 +179,14 @@ function update_svg(svg, newdata_array, index_fn,
 	.attr("cy",
 	      function(animal) {
 		  console.log("removing:" + animal.name + "/" + animal.animal_id);
-		  return 300;
+		  return 1500;
 	      }).remove();
 
     // Remove labels not in new data.
     newlabels.exit().transition().duration(2500)
         .style("stroke","white")
         .style("fill","white")
-	.attr("y",300).remove();
+	.attr("y",1200).remove();
 
     existing = newdata_array;
 }

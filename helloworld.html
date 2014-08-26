@@ -15,6 +15,9 @@
 
       /* our own domain-specific styles */
       @import url("helloworld.css");
+      @import url("game.css");
+      @import url("http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css")
+
 
     </style>
 
@@ -23,11 +26,30 @@
     <h1>d3 helloworld</h1>
     <div id="status">Starting animal show..</div>
 
-    <div class="label">SVG</div>
-    <div id="simple_svg" class="learning">
-	<!-- SVG goes in here. -->
-    </div>
+    <div id="game">
+      <div id="sky">
+	<i class="fa fa-cloud fa-6x"
+           style="left:130px; top:10px" > </i>
+      
+	<i class="fa fa-cloud medium-cloud storm-cloud"
+	   style="left:230px; top:10px;"> </i>
+	
+	<i class="fa fa-cloud big-cloud"
+           style="left:330px; top:30px;"> </i>
+	
+	<i class="fa fa-cloud"
+           style="left:450px; font-size:75px; top:15px;"> </i>
 
+      </div>
+
+      <div id="simple_svg" class="learning">
+      </div>
+
+
+     <div id="ground">
+     </div>
+    </div>
+    
     <div id="links">
       <ul>
 	<li><a href="helloworld.css">helloworld.css</a></li>

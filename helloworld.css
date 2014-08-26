@@ -1,5 +1,9 @@
 #simple_svg {
-    height:300px;
+    z-index:1;
+    position:absolute;
+    left:0;
+    top:0;
+    height:100%;
 }
 
 text {
@@ -14,13 +18,6 @@ circle {
 }
 
 .learning {
-    border:2px solid blue;
-    width:99%;
-    margin-bottom:1em;
-    padding-left:0.5%;
-    padding-top:0.5em;
-    padding-bottom:0.5em;
-    float:left;
 }
 
 div.label {
