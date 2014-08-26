@@ -29,7 +29,7 @@ var animals = [
 
 ];
 
-// bear and cat.
+// bear, otter and cat.
 var friends = [ animals[0], animals[1] ,animals[2] ];
 
 // dog and cat.
@@ -53,7 +53,7 @@ function hello_world(dom_id) {
     var svg = d3.select("#simple_svg").append("svg")
 	.attr("class", "chart")
 	.attr("width", 500)
-	.attr("height", 300);
+	.attr("height", 600);
     show_animal_set(svg);
     setInterval(function() {
 	show_animal_set(svg);
