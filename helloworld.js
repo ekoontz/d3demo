@@ -3,7 +3,7 @@
 
 var animals = [
     {"name":"bear",  // 0
-     "x":25
+     "x":525
     },
     {"name":"otter", // 1
      "x":85
@@ -53,7 +53,7 @@ function hello_world(dom_id) {
     var svg = d3.select("#simple_svg").append("svg")
 	.attr("class", "chart")
 	.attr("width", 500)
-	.attr("height", 600);
+	.attr("height", 525);
     show_animal_set(svg);
     setInterval(function() {
 	show_animal_set(svg);
@@ -154,8 +154,8 @@ function update_svg(svg, newdata_array, index_fn,
 	style("stroke","white").
 	style("fill","white").
 	transition().duration(2000).
-	style("stroke","lightgreen").
-	style("fill","lightgreen").
+	style("stroke","lightblue").
+	style("fill","aliceblue").
 	attr("cy",140);
     
     var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
@@ -170,23 +170,22 @@ function update_svg(svg, newdata_array, index_fn,
 	transition().duration(2000).
 	style("stroke","#666").
 	style("fill","#666").
-	attr("y",143);
+	attr("y",145);
 
     // Remove items not in new data.
-    newdata.exit().transition().duration(2500)
+    newdata.exit().transition().duration(1500)
         .style("fill","white")
         .style("stroke","white")
 	.attr("cy",
 	      function(animal) {
-		  console.log("removing:" + animal.name + "/" + animal.animal_id);
-		  return 1500;
+		  return 650;
 	      }).remove();
 
     // Remove labels not in new data.
-    newlabels.exit().transition().duration(2500)
+    newlabels.exit().transition().duration(1500)
         .style("stroke","white")
         .style("fill","white")
-	.attr("y",1200).remove();
+	.attr("y",650).remove();
 
     existing = newdata_array;
 }
