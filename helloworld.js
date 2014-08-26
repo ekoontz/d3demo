@@ -57,7 +57,7 @@ function hello_world(dom_id) {
     show_animal_set(svg);
     setInterval(function() {
 	show_animal_set(svg);
-    },2500);
+    },1000);
 }
 
 function random_set() {
@@ -149,43 +149,20 @@ function update_svg(svg, newdata_array, index_fn,
 	    console.log("appending: " + c.name + "/" + c.animal_id);
 	    return c.x;
 	}).
-	attr("cy",function(c) {return -50;}).
-        attr("r", function(c) {return 25;}).
+	attr("cy",function(c) {return -5;}).
+        attr("r", function(c) {return 20;}).
 	style("stroke","white").
 	style("fill","white").
-	transition().duration(2000).
+	transition().duration(1000).
 	style("stroke","lightblue").
 	style("fill","aliceblue").
 	attr("cy",140);
-    
-    var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
-    newlabels.enter().append("text").
-	attr("x",function(c) {
-	    return c.x - 10;}).
-	attr("y",function(c) {return -50;}).
-        attr("r", function(c) {return 25;}).
-	style("stroke","white").
-	style("fill","white").
-	text(text_fn).
-	transition().duration(2000).
-	style("stroke","#666").
-	style("fill","#666").
-	attr("y",145);
 
     // Remove items not in new data.
-    newdata.exit().transition().duration(1500)
-        .style("fill","white")
-        .style("stroke","white")
-	.attr("cy",
+    newdata.exit().transition().duration(1000).attr("cy",
 	      function(animal) {
 		  return 650;
 	      }).remove();
-
-    // Remove labels not in new data.
-    newlabels.exit().transition().duration(1500)
-        .style("stroke","white")
-        .style("fill","white")
-	.attr("y",650).remove();
 
     existing = newdata_array;
 }
