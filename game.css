@@ -1,0 +1,63 @@
+#game {
+    width:90%;
+    height:600;
+    border:2px solid darkgrey;
+    margin-top:1em;
+    background: lightblue;
+    float:left;
+}
+
+#game .fa-6x {
+    font-size:150px;
+}
+
+#game i,div {
+    position:relative;
+}
+
+#rainforest {
+    z-index:0;
+}
+
+#sky {
+    z-index:0;
+    background:lightblue;
+}
+
+#sky .fa-cloud {
+    color: white;
+}
+
+#sky .medium-cloud {
+    font-size:100px;
+}
+
+#sky .big-cloud {
+    font-size:205px;
+}
+
+#sky .storm-cloud {
+    color: lightgrey;
+   -webkit-text-stroke: 1px darkgrey;
+   text-shadow:
+   -1px -1px 0 darkgrey,  
+   1px -1px 0 darkgrey,
+   -1px 1px 0 darkgrey,
+   1px 1px 0 darkgrey;
+}
+
+#game .fa-tree {
+    z-index:2;
+    color: darkgreen;
+}
+
+#ground {
+    width:100%;
+    z-index:0;
+    height:192;
+    bottom:-200;
+    float:left;
+    border-top:2px solid lightgreen;
+    background:lightgreen;
+}
+
