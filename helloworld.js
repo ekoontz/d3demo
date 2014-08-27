@@ -49,14 +49,32 @@ var pets = [animals[2],animals[3],animals[5],animals[7]];
 
 var sets = [ friends, family, canine, wild, mammals, reptiles, pets];
 
-function hello_world(dom_id) {
+function entry_point_from_dom(dom_id) {
     var svg = d3.select("#simple_svg").append("svg")
 	.attr("class", "chart")
 	.attr("width", 500)
 	.attr("height", 825);
-    show_animal_set(svg);
+
+    // index_fn: what key to use to compare items for equality.
+    var index_fn = function(d) {return d.animal_id;};
+    // text_fn: what to display in the output SVG circle.
+    var text_fn = function(d) {return d.name;};
+    // show the next set in animal_sets.
+    var animal_set = random_set();
+    console.log("switching to set:" + animal_set.map(text_fn));
+    d3.select("#status").html("Now entering: " + animal_set.map(text_fn));
+    update_svg(svg,animal_set,index_fn,text_fn);
+
     setInterval(function() {
-	show_animal_set(svg);
+	// index_fn: what key to use to compare items for equality.
+	var index_fn = function(d) {return d.animal_id;};
+	// text_fn: what to display in the output SVG circle.
+	var text_fn = function(d) {return d.name;};
+	// show the next set in animal_sets.
+	var animal_set = random_set();
+	console.log("switching to set:" + animal_set.map(text_fn));
+	d3.select("#status").html("Now entering: " + animal_set.map(text_fn));
+	update_svg(svg,animal_set,index_fn,text_fn);
     },1000);
 }
 
@@ -74,18 +92,6 @@ function make_set(set) {
 		"animal_id": current_animal_id++
 	       };
     });
-}
-
-function show_animal_set(svg) {
-    // index_fn: what key to use to compare items for equality.
-    var index_fn = function(d) {return d.animal_id;};
-    // text_fn: what to display in the output SVG circle.
-    var text_fn = function(d) {return d.name;};
-    // show the next set in animal_sets.
-    var animal_set = random_set();
-    console.log("switching to set:" + animal_set.map(text_fn));
-    d3.select("#status").html("Now entering: " + animal_set.map(text_fn));
-    update_svg(svg,animal_set,index_fn,text_fn);
 }
 
 function log_at_info(str) {
