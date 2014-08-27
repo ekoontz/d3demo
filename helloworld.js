@@ -113,7 +113,7 @@ function update_svg(svg, newdata_array, index_fn,
 	attr("cy",function(c) {return 150;}).
         attr("r", function(c) {return 5;}).
 	style("stroke","white").
-	style("fill","white").
+	style("fill","darkgrey").
 	transition().duration(3000).
 	style("stroke","lightblue").
 	style("fill","aliceblue").
