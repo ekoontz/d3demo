@@ -107,21 +107,21 @@ function update_svg(svg, newdata_array, index_fn,
     // Add items unique to input_data.
     newdata.enter().append("circle").
 	attr("cx",function (c) {
-	    var choice = Math.floor(Math.random()*2000);
+	    var choice = Math.floor(Math.random()*2500);
 	    return choice;
 	}).
 	attr("cy",function(c) {return 150;}).
-        attr("r", function(c) {return 5;}).
+        attr("r", function(c) {return 20;}).
 	style("stroke","white").
 	style("fill","darkgrey").
 	transition().duration(3000).
 	style("stroke","lightblue").
 	style("fill","aliceblue").
-	attr("cy",1800);
+	attr("cy",800);
     // Remove items not in new data.
     newdata.exit().transition().duration(1000).attr("cy",
 	      function(animal) {
-		  return 1580;
+		  return 380;
 	      }).remove();
     existing = newdata_array;
 }
