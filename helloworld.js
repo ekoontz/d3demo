@@ -53,7 +53,7 @@ function hello_world(dom_id) {
     var svg = d3.select("#simple_svg").append("svg")
 	.attr("class", "chart")
 	.attr("width", 500)
-	.attr("height", 525);
+	.attr("height", 825);
     show_animal_set(svg);
     setInterval(function() {
 	show_animal_set(svg);
@@ -79,21 +79,46 @@ function make_set(set) {
 function show_animal_set(svg) {
     // index_fn: what key to use to compare items for equality.
     var index_fn = function(d) {return d.animal_id;};
-    
     // text_fn: what to display in the output SVG circle.
     var text_fn = function(d) {return d.name;};
-    
     // show the next set in animal_sets.
     var animal_set = random_set();
-    
-//    console.log("switching to set:" + animal_set.map(text_fn));
-    
+    console.log("switching to set:" + animal_set.map(text_fn));
     d3.select("#status").html("Now entering: " + animal_set.map(text_fn));
-    
     update_svg(svg,animal_set,index_fn,text_fn);
-	
 }
+
+function log_at_info(str) {
+    console.log("INFO: " + Date.now() + str);
+}
+
 var existing = null;
+
+function update_svg(svg, newdata_array, index_fn,
+		    text_fn) {
+    var newdata_array = complement(existing,newdata_array,svg.selectAll("circle"));
+    var newdata = svg.selectAll("circle").data(newdata_array,index_fn);
+    // Add items unique to input_data.
+    newdata.enter().append("circle").
+	attr("cx",function (c) {
+	    var choice = Math.floor(Math.random()*2000);
+	    return choice;
+	}).
+	attr("cy",function(c) {return 150;}).
+        attr("r", function(c) {return 5;}).
+	style("stroke","white").
+	style("fill","white").
+	transition().duration(3000).
+	style("stroke","lightblue").
+	style("fill","aliceblue").
+	attr("cy",1800);
+    // Remove items not in new data.
+    newdata.exit().transition().duration(1000).attr("cy",
+	      function(animal) {
+		  return 1580;
+	      }).remove();
+    existing = newdata_array;
+}
 
 function find_animal(needle,haystack) {
     var i = 0;
@@ -135,34 +160,4 @@ function complement(existing,newset) {
     }
 
     return retval;
-}
-
-function update_svg(svg, newdata_array, index_fn,
-		    text_fn) {
-    var newdata_array = complement(existing,newdata_array,svg.selectAll("circle"));
-
-    var newdata = svg.selectAll("circle").data(newdata_array,index_fn);
-
-    // Add items unique to input_data.
-    newdata.enter().append("circle").
-	attr("cx",function(c) {
-	    console.log("appending: " + c.name + "/" + c.animal_id);
-	    return c.x;
-	}).
-	attr("cy",function(c) {return -5;}).
-        attr("r", function(c) {return 20;}).
-	style("stroke","white").
-	style("fill","white").
-	transition().duration(1000).
-	style("stroke","lightblue").
-	style("fill","aliceblue").
-	attr("cy",140);
-
-    // Remove items not in new data.
-    newdata.exit().transition().duration(1000).attr("cy",
-	      function(animal) {
-		  return 650;
-	      }).remove();
-
-    existing = newdata_array;
 }
