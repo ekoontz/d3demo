@@ -1,9 +1,18 @@
-#simple_svg {
+#gameboard {
     z-index:1;
     position:absolute;
-    left:0;
-    top:0;
-    height:600;
+    left:5%;
+    top:150;
+    height:500;
+    width:700;
+    border:2px solid #ddd;
+}
+
+#links {
+    float:right;
+    border:1px solid #ccc;
+    padding:0.5em;
+    width:auto;
 }
 
 text {
@@ -13,8 +22,8 @@ text {
 
 circle {
     stroke-width:1;
-    stroke: lightgreen;
-    fill: lightgreen;
+    stroke: deepskyblue;
+    fill: white;
 }
 
 .learning {

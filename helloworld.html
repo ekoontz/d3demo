@@ -5,6 +5,7 @@
 
     <!-- d3 library -->
     <script type="text/javascript" src="d3.v2.min.js"></script>
+
     <!-- our own domain-specific code -->
     <script type="text/javascript" src="helloworld.js"></script>
 
@@ -12,12 +13,11 @@
       /* standard styles */
       @import url("style.css");
       @import url("syntax.css");
+      @import url("http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
 
       /* our own domain-specific styles */
       @import url("helloworld.css");
       @import url("game.css");
-      @import url("http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css")
-
     </style>
 
   </head>
@@ -25,7 +25,7 @@
     <h1>d3 helloworld</h1>
     <div id="status">Starting animal show..</div>
 
-    <div id="game">
+<!--    <div id="game">
       <div id="sky">
 	<i class="fa fa-cloud fa-6x"
            style="left:130px; top:10px" > </i>
@@ -39,12 +39,15 @@
 	<i class="fa fa-cloud"
            style="left:450px; font-size:75px; top:15px;"> </i>
 
+      </div> -->
+
+      <div id="gameboard" class="learning">
+	<svg id="svg">
+	</svg>
+
       </div>
 
-      <div id="simple_svg" class="learning">
-      </div>
-
-
+<!--
      <div id="ground">
 
       <i class="fa fa-tree fa-5x"
@@ -75,7 +78,7 @@
 
      </div>
     </div>
-    
+    -->
     <div id="links">
       <ul>
 	<li><a href="helloworld.css">helloworld.css</a></li>
