@@ -1,6 +1,6 @@
 #gameboard {
     width:90%;
-    height:600;
+    height:300;
     border:2px solid darkgrey;
     margin-top:1em;
     background: white;
@@ -13,6 +13,10 @@
 
 #game i,div {
     position:relative;
+}
+
+svg {
+    overflow:visible;
 }
 
 #rainforest {
