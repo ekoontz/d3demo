@@ -2,17 +2,31 @@
 var svg = d3.select("gameboard").append("svg")
     .attr("class", "chart")
     .attr("width", 500)
-    .attr("height", 200);
+    .attr("height", 400);
 
 function entry_point_from_dom(dom_id) {
     svg = d3.select("svg");
 
-    var circle = svg.selectAll("circle")
-	.data([100, 200, 300, 400, 500]);
+    var droplets = svg.selectAll("circle")
+	.data([{"sc": 100,
+		"y":50},
+	       {"sc":200,
+		"y":75},
+	       {"sc":300,
+		"y":100},
+	       {"sc":400,
+		"y":150},
+	       {"sc":500,
+		"y":200},
+	       {"sc":400,
+		"y":150},
+	       {"sc":300,
+		"y":100},
+	      ]);
     
-    var circleEnter = circle.enter().append("circle");
-    circleEnter.attr("cy", 100);
-    circleEnter.attr("cx", function(d, i) { return (i * 50) + 30; });
-    circleEnter.attr("r", function(d) { return Math.sqrt(d); });
+    var dropletEnter = droplets.enter().append("circle");
+    dropletEnter.attr("cy", function(d) { return d.y;});
+    dropletEnter.attr("cx", function(d, i) { return (i * 50) + 30; });
+    dropletEnter.attr("r", function(d) { return Math.sqrt(d.sc*1.7); });
 
 }
