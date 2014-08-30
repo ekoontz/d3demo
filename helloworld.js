@@ -51,14 +51,23 @@ var pets = [animals[2],animals[3],animals[5],animals[7]];
 
 var sets = [ friends, family, canine, wild, mammals, reptiles, pets];
 
+var sets_with_names = {"friends":friends,
+		       "family":family,
+		       "canine":canine,
+		       "wild":wild,
+		       "mammals":mammals,
+		       "reptiles":reptiles,
+		       "pets":pets};
 
 var colors = ["lightgreen","yellow","lightblue","skyblue","orange"];
 
 function random_set() {
-    var choice = Math.floor(Math.random()*sets.length);
-
-    return make_set(sets[choice]);
-
+    var choice_i = Math.floor(Math.random()*(Object.keys(sets_with_names).length));
+    var set_name = Object.keys(sets_with_names)[choice_i];
+    console.log("set: " + set_name);
+    d3.select("#status").html("Now entering: " + set_name);
+    var use_set = sets_with_names[set_name];
+    return make_set(use_set);
 }
 
 function startgame(dom_id) {
@@ -95,7 +104,7 @@ function show_animal_set(svg) {
     
 //    console.log("switching to set:" + animal_set.map(text_fn));
     
-    d3.select("#status").html("Now entering: " + animal_set.map(text_fn));
+//    d3.select("#status").html("Now entering: " + animal_set.map(text_fn));
     
     update_svg(svg,animal_set,index_fn,text_fn);
 	
