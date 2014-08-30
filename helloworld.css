@@ -8,9 +8,37 @@ text {
 }    
 
 circle {
-    stroke-width:1;
-    stroke: lightgreen;
-    fill: lightgreen;
+    stroke-width:2;
+    stroke:black;
+    fill: lightskyblue;
+}
+
+.cat {
+    fill:orange;
+}
+
+.dog {
+    fill:chocolate;
+}
+
+.cow {
+    fill:sandybrown;
+}
+
+.gecko {
+    fill:olive;
+}
+
+.otter {
+    fill:sienna;
+}
+
+.snake {
+    fill:gray;
+}
+
+.wolf {
+    fill:brown;
 }
 
 .learning {

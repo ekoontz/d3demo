@@ -1,35 +1,42 @@
 // I declared these external so that I can refer to them from the Web Console for Firefox
 // (or equivalent with other browsers).
 
+var background = "white";
+
 var radius = 35;
 
 var animals = [
-    {"name":"bear",  // 0
-     "x":25
-    },
-    {"name":"otter", // 1
-     "x":85
-    },
     {"name":"cat",   // 2
      "x":150
     },
     {"name":"dog",   // 3
      "x":210
     },
-    {"name":"wolf",  // 4
-     "x":270
+    {"name":"cow",   // 6
+     "x":390
+    },
+    {"name":"gecko", // 7
+     "x":450
+    },
+    {"name":"otter", // 1
+     "x":85
     },
     {"name":"snake", // 5
      "x":330
     },
-    {"name":"cow",   // 6
-     "x":390
-    },
-    {"name":"gecko",// 7
-     "x":450
+    {"name":"wolf",  // 4
+     "x":270
     }
-
 ];
+
+var bear  = animals[0];
+var otter = animals[1];
+var cat   = animals[2];
+var dog   = animals[3];
+var wolf  = animals[4];
+var snake = animals[5];
+var cow   = animals[6];
+var gecko = animals[7];
 
 // bear and cat.
 var friends = [ animals[0], animals[1] ,animals[2] ];
@@ -49,64 +56,48 @@ var reptiles = [ animals[5],animals[7]];
 
 var pets = [animals[2],animals[3],animals[5],animals[7]];
 
-var sets = [ friends, family, canine, wild, mammals, reptiles, pets];
-
-var sets_with_names = {"friends":friends,
-		       "family":family,
-		       "canine":canine,
-		       "wild":wild,
-		       "mammals":mammals,
-		       "reptiles":reptiles,
-		       "pets":pets};
-
-var colors = ["lightgreen","yellow","lightblue","skyblue","orange"];
+var set_of_maps = [ {"name":"friends",
+		     "animals":[ bear, otter, cat ]},
+		    {"name":"family",
+		     "animals": [ dog,  cat ]},
+		    {"name":"canine",
+		     "animals": [ wolf, dog ]},
+		    {"name":"wild",
+		     "animals":[ bear, otter, wolf, snake ]},
+		    {"name":"mammals",
+		     "animals": [bear, otter, cat, dog, wolf, cow ]},
+		    {"name":"reptiles",
+		     "animals":[snake, gecko]},
+		    {"name":"pets",
+		     "animals":[dog, cat, snake, cow]}];
 
 function random_set() {
-    var choice_i = Math.floor(Math.random()*(Object.keys(sets_with_names).length));
-    var set_name = Object.keys(sets_with_names)[choice_i];
-    console.log("set: " + set_name);
+    var choice_i = Math.floor(Math.random()*(set_of_maps.length));
+    var set_name = set_of_maps[choice_i].name;
     d3.select("#status").html("Now entering: " + set_name);
-    var use_set = sets_with_names[set_name];
-    return make_set(use_set);
+    var use_set = set_of_maps[choice_i];
+    return use_set;
 }
 
 function startgame(dom_id) {
     var svg = d3.select("#game").append("svg")
 	.attr("class", "chart")
 	.attr("width", 500)
-	.attr("height", 300);
+	.attr("height", 500);
     show_animal_set(svg);
     setInterval(function() {
 	show_animal_set(svg);
-    },2500);
-}
-
-var current_animal_id = 0;
-
-function make_set(set) {
-    return set.map(function(x) {
-	return {"name": x.name,
-		"x": x.x,
-		"animal_id": current_animal_id++
-	       };
-    });
+    },5500);
 }
 
 function show_animal_set(svg) {
     // index_fn: what key to use to compare items for equality.
     var index_fn = function(d) {return d.animal_id;};
-    
-    // text_fn: what to display in the output SVG circle.
-    var text_fn = function(d) {return d.name;};
-    
     // show the next set in animal_sets.
     var animal_set = random_set();
-    
-//    console.log("switching to set:" + animal_set.map(text_fn));
-    
-//    d3.select("#status").html("Now entering: " + animal_set.map(text_fn));
-    
-    update_svg(svg,animal_set,index_fn,text_fn);
+    console.log("group name:" + animal_set.name);
+    console.log("animals:" + animal_set.animals.map(function(e) {return e.name;}));
+    update_svg(svg,animal_set,index_fn);
 	
 }
 var existing = null;
@@ -129,12 +120,14 @@ function complement(existing,newset) {
 	to_add = [];
 	console.log("existing   :" + existing.map(function(d) {return d.name + "/" + d.animal_id;}));
 	for(i = 0; i < existing.length; i++) {
+	    console.log("checking for needle: " + existing[i] + " in haystack: " + newset);
 	    if (find_animal(existing[i],newset)) {
 		keep.push(existing[i]);
 	    }
 	}
 
 	for(i = 0; i < newset.length; i++) {
+	    console.log("checking for needle: " + newsset[i] + " in haystack: " + exiting);
 	    if (find_animal(newset[i],existing) == false) {
 		to_add.push(newset[i]);
 	    }
@@ -145,7 +138,6 @@ function complement(existing,newset) {
     for(i = 0; i < keep.length; i++) {
 	retval.push(keep[i]);
     }
-    to_add = make_set(to_add);
     for(i = 0; i < to_add.length; i++) {
 	retval.push(to_add[i]);
     }
@@ -153,58 +145,36 @@ function complement(existing,newset) {
     return retval;
 }
 
-function update_svg(svg, newdata_array, index_fn,
-		    text_fn) {
-    var newdata_array = complement(existing,newdata_array,svg.selectAll("circle"));
-
+function update_svg(svg, newdata_array, index_fn) {
+    console.log("update_svg: new group:" + 
+		newdata_array.name);
+    var newdata_array = complement(existing,newdata_array.animals,svg.selectAll("circle"));
     var newdata = svg.selectAll("circle").data(newdata_array,index_fn);
-
-    var color = colors[Math.floor(Math.random()*colors.length)];
 
     // Add items unique to input_data.
     newdata.enter().append("circle").
 	attr("cx",function(c) {
-	    console.log("appending: " + c.name + "/" + c.animal_id);
+	    console.log("appending: " + c.name);
 	    return c.x;
 	}).
 	attr("cy",function(c) {return -50;}).
         attr("r", function(c) {return radius;}).
-	style("stroke","white").
-	style("fill","white").
-	transition().duration(2000).
-	style("stroke","lightgreen").
-	style("fill",color).
+	attr("class",function(c) {
+	    console.log("add class: " + c.name);
+	    return c.name;
+	}).
+	transition().duration(1000).
 	attr("cy",140);
     
-    var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
-    newlabels.enter().append("text").
-	attr("x",function(c) {
-	    return c.x - 10;}).
-	attr("y",function(c) {return -50;}).
-        attr("r", function(c) {return radius;}).
-	style("stroke","white").
-	style("fill","white").
-	text(text_fn).
-	transition().duration(2000).
-	style("stroke","#666").
-	style("fill","#666").
-	attr("y",143);
-
     // Remove items not in new data.
+
     newdata.exit().transition().duration(2500)
-        .style("fill","white")
-        .style("stroke","white")
+        .style("fill",background)   // fill to white: fade to background
 	.attr("cy",
 	      function(animal) {
-		  console.log("removing:" + animal.name + "/" + animal.animal_id);
-		  return 300;
+		  console.log("removing:" + animal.name);
+		  return 800;
 	      }).remove();
 
-    // Remove labels not in new data.
-    newlabels.exit().transition().duration(2500)
-        .style("stroke","white")
-        .style("fill","white")
-	.attr("y",300).remove();
-
-    existing = newdata_array;
+    existing = newdata_array.animals;
 }
