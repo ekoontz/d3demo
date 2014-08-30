@@ -1,9 +1,4 @@
 
-var svg = d3.select("gameboard").append("svg")
-    .attr("class", "chart")
-    .attr("width", 500)
-    .attr("height", 400);
-
 function entry_point_from_dom(dom_id) {
     svg = d3.select("svg");
 
@@ -28,5 +23,8 @@ function entry_point_from_dom(dom_id) {
     dropletEnter.attr("cy", function(d) { return d.y;});
     dropletEnter.attr("cx", function(d, i) { return (i * 50) + 30; });
     dropletEnter.attr("r", function(d) { return Math.sqrt(d.sc*1.7); });
+
+
+
 
 }
