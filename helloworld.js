@@ -1,6 +1,8 @@
 // I declared these external so that I can refer to them from the Web Console for Firefox
 // (or equivalent with other browsers).
 
+var radius = 35;
+
 var animals = [
     {"name":"bear",  // 0
      "x":25
@@ -49,6 +51,9 @@ var pets = [animals[2],animals[3],animals[5],animals[7]];
 
 var sets = [ friends, family, canine, wild, mammals, reptiles, pets];
 
+
+var colors = ["lightgreen","yellow","lightblue","skyblue","orange"];
+
 function random_set() {
     var choice = Math.floor(Math.random()*sets.length);
 
@@ -56,9 +61,8 @@ function random_set() {
 
 }
 
-function hello_world(dom_id) {
-
-    var svg = d3.select("#simple_svg").append("svg")
+function startgame(dom_id) {
+    var svg = d3.select("#game").append("svg")
 	.attr("class", "chart")
 	.attr("width", 500)
 	.attr("height", 300);
@@ -146,6 +150,8 @@ function update_svg(svg, newdata_array, index_fn,
 
     var newdata = svg.selectAll("circle").data(newdata_array,index_fn);
 
+    var color = colors[Math.floor(Math.random()*colors.length)];
+
     // Add items unique to input_data.
     newdata.enter().append("circle").
 	attr("cx",function(c) {
@@ -153,12 +159,12 @@ function update_svg(svg, newdata_array, index_fn,
 	    return c.x;
 	}).
 	attr("cy",function(c) {return -50;}).
-        attr("r", function(c) {return 25;}).
+        attr("r", function(c) {return radius;}).
 	style("stroke","white").
 	style("fill","white").
 	transition().duration(2000).
 	style("stroke","lightgreen").
-	style("fill","lightgreen").
+	style("fill",color).
 	attr("cy",140);
     
     var newlabels = svg.selectAll("text").data(newdata_array,index_fn);
@@ -166,7 +172,7 @@ function update_svg(svg, newdata_array, index_fn,
 	attr("x",function(c) {
 	    return c.x - 10;}).
 	attr("y",function(c) {return -50;}).
-        attr("r", function(c) {return 25;}).
+        attr("r", function(c) {return radius;}).
 	style("stroke","white").
 	style("fill","white").
 	text(text_fn).
