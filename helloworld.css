@@ -2,6 +2,12 @@
     height:300px;
 }
 
+#status {
+    float:right;
+    width:auto;
+    border:1px solid #ccd;
+}
+
 text {
     stroke:#666;
     fill:#666;
