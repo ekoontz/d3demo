@@ -10,8 +10,7 @@
 }
 
 text {
-    stroke:#666;
-    fill:#666;
+    text-anchor:middle;
 }    
 
 circle {
@@ -22,13 +21,6 @@ circle {
 
 .bear {
     x:50;
-}
-
-circle.bear {
-    fill:black;
-}
-
-text.bear {
     fill:black;
 }
 
