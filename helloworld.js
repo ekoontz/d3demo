@@ -4,34 +4,38 @@
 var background = "white";
 
 var radius = 35;
-
+var game_width = 800;
+var game_height = 500;
 var animals = [
-    {"name":"cat",   // 2
+    {"name":"bear",
+     "x":50
+    },
+    {"name":"cat",
      "x":150
     },
-    {"name":"dog",   // 3
-     "x":210
+    {"name":"cow",
+     "x":250
     },
-    {"name":"cow",   // 6
-     "x":390
+    {"name":"dog",
+     "x":350
     },
-    {"name":"gecko", // 7
+    {"name":"gecko",
      "x":450
     },
-    {"name":"otter", // 1
-     "x":85
+    {"name":"otter",
+     "x":550
     },
-    {"name":"snake", // 5
-     "x":330
+    {"name":"snake",
+     "x":650
     },
-    {"name":"wolf",  // 4
-     "x":270
+    {"name":"wolf",
+     "x":750
     }
 ];
 
 var bear  = animals[0];
-var otter = animals[1];
-var cat   = animals[2];
+var cat   = animals[1];
+var otter = animals[2];
 var dog   = animals[3];
 var wolf  = animals[4];
 var snake = animals[5];
@@ -81,8 +85,8 @@ function random_set() {
 function startgame(dom_id) {
     var svg = d3.select("#game").append("svg")
 	.attr("class", "chart")
-	.attr("width", 500)
-	.attr("height", 500);
+	.attr("width", game_width)
+	.attr("height", game_height);
     show_animal_set(svg);
     setInterval(function() {
 	show_animal_set(svg);
