@@ -65,7 +65,6 @@ function start_game() {
     },transition_time);
 }
 
-
 function show_animal_set(svg) {
     // index_fn: what key to use to compare items for equality.
     var index_fn = function(d) {return d.name;};
