@@ -10,6 +10,9 @@
 }
 
 text {
+    font-family:sans-serif;
+    font-size:20px;
+    transform-origin:0,0,0;
     text-anchor:middle;
 }    
 
@@ -20,7 +23,6 @@ circle {
 }
 
 .bear {
-    x:50;
     fill:black;
 }
 

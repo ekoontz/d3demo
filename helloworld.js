@@ -45,19 +45,19 @@ var snake = animals[6];
 var wolf  = animals[7];
 
 var set_of_maps = [ {"name":"friends",
-		     "animals":[ bear, cat, otter]},
+		     "animals":[bear, cat, otter]},
 		    {"name":"family",
-		     "animals": [ dog,  cat ]},
+		     "animals":[dog,  cat]},
 		    {"name":"canine",
-		     "animals": [ dog, wolf ]},
+		     "animals":[dog, wolf]},
 		    {"name":"wild",
-		     "animals":[ bear, otter, snake,wolf ]},
+		     "animals":[bear, otter, snake, wolf]},
 		    {"name":"mammals",
-		     "animals": [ bear, cat, cow, dog, otter, wolf]},
+		     "animals":[bear, cat, cow, dog, otter, wolf]},
 		    {"name":"reptiles",
-		     "animals":[ gecko, snake]},
+		     "animals":[gecko, snake]},
 		    {"name":"pets",
-		     "animals":[ dog, cat, snake]}];
+		     "animals":[cat, dog, snake]}];
 
 function random_set() {
     var choice_i = Math.floor(Math.random()*(set_of_maps.length));
