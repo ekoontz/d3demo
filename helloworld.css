@@ -3,10 +3,6 @@
 
 }
 
-#simple_svg {
-    height:300px;
-}
-
 #status {
     float:right;
     width:auto;
@@ -22,6 +18,18 @@ circle {
     stroke-width:2;
     stroke:black;
     fill: lightskyblue;
+}
+
+.bear {
+    x:50;
+}
+
+circle.bear {
+    fill:black;
+}
+
+text.bear {
+    fill:black;
 }
 
 .cat {

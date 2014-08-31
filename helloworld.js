@@ -4,32 +4,33 @@
 var background = "white";
 
 var radius = 35;
-var game_width = 800;
+var game_width = 1000;
 var game_height = 500;
+var offset=25;
 var animals = [
     {"name":"bear",
-     "x":50
+     "x":50+offset
     },
     {"name":"cat",
-     "x":150
+     "x":150+offset
     },
     {"name":"cow",
-     "x":250
+     "x":250+offset
     },
     {"name":"dog",
-     "x":350
+     "x":350+offset
     },
     {"name":"gecko",
-     "x":450
+     "x":450+offset
     },
     {"name":"otter",
-     "x":550
+     "x":550+offset
     },
     {"name":"snake",
-     "x":650
+     "x":650+offset
     },
     {"name":"wolf",
-     "x":750
+     "x":750+offset
     }
 ];
 
@@ -83,10 +84,7 @@ function random_set() {
 }
 
 function startgame(dom_id) {
-    var svg = d3.select("#game").append("svg")
-	.attr("class", "chart")
-	.attr("width", game_width)
-	.attr("height", game_height);
+    var svg = d3.select("#game-svg");
     show_animal_set(svg);
     setInterval(function() {
 	show_animal_set(svg);
@@ -180,7 +178,7 @@ function update_svg(svg, newdata_array, index_fn) {
         .style("fill",background)   // fill to white: fade to background
 	.attr("cy",
 	      function(animal) {
-		  console.log("removing:" + animal.name);
+//		  console.log("removing:" + animal.name);
 		  return 800;
 	      }).remove();
 
