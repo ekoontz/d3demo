@@ -74,9 +74,8 @@ var set_of_maps = [ {"name":"friends",
 function random_set() {
     var choice_i = Math.floor(Math.random()*(set_of_maps.length));
     var set_name = set_of_maps[choice_i].name;
-    d3.select("#status").html("Now entering: " + set_name);
-    var use_set = set_of_maps[choice_i];
-    return use_set;
+    d3.select("#status").html("New set chosen: " + set_name);
+    return set_of_maps[choice_i];
 }
 
 function startgame(dom_id) {
@@ -90,13 +89,19 @@ function startgame(dom_id) {
     },5500);
 }
 
+function keys(arg) {
+    return Object.keys(arg);
+}
+
 function show_animal_set(svg) {
     // index_fn: what key to use to compare items for equality.
     var index_fn = function(d) {return d.animal_id;};
     // show the next set in animal_sets.
     var animal_set = random_set();
-    console.log("group name:" + animal_set.name);
-    console.log("animals:" + animal_set.animals.map(function(e) {return e.name;}));
+//    console.log("group name:" + animal_set.name);
+//    console.log("animal set:" + animal_set);
+//    console.log("animal keys:" + keys(animal_set));
+    console.log("new animal set:" + animal_set.animals.map(function(e) {return e.name;}));
     update_svg(svg,animal_set,index_fn);
 	
 }
@@ -146,28 +151,27 @@ function complement(existing,newset) {
 }
 
 function update_svg(svg, newdata_array, index_fn) {
-    console.log("update_svg: new group:" + 
-		newdata_array.name);
+//    console.log("new group:" + 
+//		newdata_array.name);
     var newdata_array = complement(existing,newdata_array.animals,svg.selectAll("circle"));
     var newdata = svg.selectAll("circle").data(newdata_array,index_fn);
 
     // Add items unique to input_data.
     newdata.enter().append("circle").
 	attr("cx",function(c) {
-	    console.log("appending: " + c.name);
+//	    console.log("appending: " + c.name);
 	    return c.x;
 	}).
 	attr("cy",function(c) {return -50;}).
         attr("r", function(c) {return radius;}).
 	attr("class",function(c) {
-	    console.log("add class: " + c.name);
+//	    console.log("adding: " + c.name);
 	    return c.name;
 	}).
 	transition().duration(1000).
 	attr("cy",140);
     
     // Remove items not in new data.
-
     newdata.exit().transition().duration(2500)
         .style("fill",background)   // fill to white: fade to background
 	.attr("cy",
